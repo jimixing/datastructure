@@ -184,10 +184,114 @@ public class Exam1 {
 		
 	}
 	
+	public void question10_heightOfTree() {
+		BinTree bt=new BinTree();
+		BinTreeNode root=bt.createBinTree(30);
+		System.out.println();
+		int height=bt.calHeightOfTree(root);
+		System.out.println(height);
+
+	}
+	
+	public void question11_heightOfTree() {
+		BinTree bt=new BinTree();
+		BinTreeNode root=bt.createBinTree(10);
+		System.out.println();
+		ArrayQueue<BinTreeNode> aq=new ArrayQueue<BinTreeNode>(BinTreeNode.class);
+		aq.enqueue(root);
+		aq.enqueue(null);
+		int level=0;
+		while(!aq.isEmpty()) {
+			BinTreeNode node=aq.dequeue();
+			if(node==null) {
+				level++;
+				if(!aq.isEmpty()) {
+					aq.enqueue(null);
+				}
+			}else {
+				if(node.getLeft()!=null) {
+					aq.enqueue(node.getLeft());
+				}
+				if(node.getRight()!=null) {
+					aq.enqueue(node.getRight());
+				}
+			}
+		}
+		System.out.println(level);
+
+		
+	}
+	public void question12_GetDeepestTreeNode() {
+		BinTree bt=new BinTree();
+		BinTreeNode root=bt.createBinTree(10);
+		System.out.println();
+		ArrayQueue<BinTreeNode> aq=new ArrayQueue<BinTreeNode>(BinTreeNode.class);
+		aq.enqueue(root);
+		ArrayStack<BinTreeNode> as=new ArrayStack<BinTreeNode>(BinTreeNode.class);
+		while(!aq.isEmpty()) {
+			BinTreeNode node=aq.dequeue();
+			as.push(node);
+			if(node.getLeft()!=null) {
+				aq.enqueue(node.getLeft());
+			}
+			if(node.getRight()!=null) {
+				aq.enqueue(node.getRight());
+
+			}
+		}
+		
+		BinTreeNode node=as.pop();
+		System.out.print(node.getData());
+		
+	}
+	
+	public void question13_deleteTreeNode() {
+		BinTree bt=new BinTree();
+		BinTreeNode root=bt.createBinTree(10);
+		System.out.println();
+		ArrayQueue<BinTreeNode> aq=new ArrayQueue<BinTreeNode>(BinTreeNode.class);
+		aq.enqueue(root);
+		int delete=20;
+		ArrayStack<BinTreeNode> as=new ArrayStack<BinTreeNode>(BinTreeNode.class);
+		BinTreeNode deleteNode=null;
+		while(!aq.isEmpty()) {
+			BinTreeNode node=aq.dequeue();
+			if(node.getData()==delete) {
+				deleteNode=node;
+			}
+			as.push(node);
+			if(node.getLeft()!=null) {
+				aq.enqueue(node.getLeft());
+			}
+			if(node.getRight()!=null) {
+				aq.enqueue(node.getRight());
+
+			}
+		}
+		if(deleteNode==null) {
+			System.out.print("Node does not found!");
+		}
+		
+		BinTreeNode node=as.pop();
+		deleteNode.setData(node.getData());
+		while(!as.isEmpty()) {
+			node=as.pop();
+			if(node.getLeft()==deleteNode) {
+				node.setLeft(null);
+				break;
+			}else if(node.getRight()==deleteNode) {
+				node.setRight(null);
+				break;
+			}
+			
+		}
+		bt.preOrderTree(root);
+	}
+	
 	
 	public static void main(String[] args) {
 		Exam1 ex=new Exam1();
-		ex.question9_reverseprint();
+		ex.question13_deleteTreeNode();
 	}
 
 }

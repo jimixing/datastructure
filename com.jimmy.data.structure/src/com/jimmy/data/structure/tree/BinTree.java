@@ -51,6 +51,42 @@ public class BinTree {
 		
 	}
 	
+	
+	
+	
+	public void deleteTreeNode(BinTreeNode root,int data) {
+		ArrayQueue<BinTreeNode> aq=new ArrayQueue<BinTreeNode>(BinTreeNode.class);
+		aq.enqueue(root);
+		while(!aq.isEmpty()) {
+			BinTreeNode node=aq.dequeue();
+			if(node.getData()==data) {
+				if(node.getLeft()==null&&node.getRight()==null) {
+					node=null;
+					break;
+				}
+			}
+			if(node.getLeft()!=null) {
+				aq.enqueue(node.getLeft());
+			}
+			if(node.getRight()!=null) {
+				aq.enqueue(node.getRight());
+			}
+			
+		}
+	}
+	
+	
+	public int calHeightOfTree(BinTreeNode root) {
+		int height=0;
+		if(root!=null) {
+			int left=calHeightOfTree(root.getLeft());
+			int right=calHeightOfTree(root.getRight());
+			height=left>right?left+1:right+1;
+			
+		}
+		return height;
+	}
+	
 	public void levelOrderTree(BinTreeNode root) {
 		ArrayQueue<BinTreeNode> aq=new ArrayQueue<BinTreeNode>(BinTreeNode.class);
 		aq.enqueue(root);
