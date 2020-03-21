@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.jimmy.data.structure.queue.ArrayQueue;
+import com.jimmy.data.structure.stack.ArrayStack;
 import com.jimmy.data.structure.tree.BinTree;
 import com.jimmy.data.structure.tree.BinTreeNode;
 
@@ -153,13 +154,40 @@ public class Exam1 {
 	}
 	
 	public void question9_reverseprint() {
+		BinTree bt=new BinTree();
+		BinTreeNode root=bt.createBinTree(10);
+		System.out.println();
+		ArrayQueue<BinTreeNode> aq=new ArrayQueue<BinTreeNode>(BinTreeNode.class);
+		ArrayStack<BinTreeNode> as=new ArrayStack<BinTreeNode>(BinTreeNode.class);
+		aq.enqueue(root);
+		as.push(root);
+		while(!aq.isEmpty()) {
+			BinTreeNode node=aq.dequeue();
+			BinTreeNode left=node.getLeft();
+			BinTreeNode right=node.getRight();
+			
+			if(right!=null) {
+				aq.enqueue(right);
+				as.push(right);
+			}
+			if(left!=null) {
+				aq.enqueue(left);
+				as.push(left);
+			}
+			
+		}
+		while(!as.isEmpty()) {
+			BinTreeNode node =as.pop();
+			System.out.print(node.getData()+",");
+		}
+		
 		
 	}
 	
 	
 	public static void main(String[] args) {
 		Exam1 ex=new Exam1();
-		ex.question8_deleteTree();
+		ex.question9_reverseprint();
 	}
 
 }
