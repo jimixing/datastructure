@@ -87,6 +87,21 @@ public class BinTree {
 		return height;
 	}
 	
+	public BinTreeNode findTreeNode(BinTreeNode root, int data) {
+		if(root!=null) {
+			if(root.getData()==data) {
+				return  root;
+			}
+			BinTreeNode node=findTreeNode(root.getLeft(),data);
+			if(node==null) {
+				node=findTreeNode(root.getRight(),data);
+			}
+			return node;
+		}
+		return null;
+	}
+	
+	
 	public void levelOrderTree(BinTreeNode root) {
 		ArrayQueue<BinTreeNode> aq=new ArrayQueue<BinTreeNode>(BinTreeNode.class);
 		aq.enqueue(root);

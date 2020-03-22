@@ -618,9 +618,7 @@ public class Exam1 {
 		int pathLen=0;
 		int data=30;
 		printPath(root,path,pathLen,data);
-		
-		
-		
+
 	}
 	
 	private void printPath(BinTreeNode root, int[] path,int pathLen, int data) {
