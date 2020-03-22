@@ -1,6 +1,7 @@
 package com.jimmy.data.structure.tree.exam;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import com.jimmy.data.structure.queue.ArrayQueue;
@@ -431,6 +432,62 @@ public class Exam1 {
 		System.out.println("max value is "+ max+" and level is "+maxLevel);
 	}
 	
+	public void question20_printPathOfTree() {
+		BinTree bt=new BinTree();
+		BinTreeNode root=bt.createBinTree(30);
+		System.out.println();
+		int[] path=new int[100];
+		int pathLen=0;
+		findPath(root,path,pathLen);
+		
+		
+	}
+	
+	private void findPath(BinTreeNode root, int[] path,int pathLen) {
+		if(root!=null) {
+			path[pathLen++]=root.getData();
+			if(root.getLeft()==null&&root.getRight()==null) {
+				printTreeNode(path,pathLen);
+			}
+			findPath(root.getLeft(),path,pathLen);
+			findPath(root.getRight(),path,pathLen);
+			
+		}
+	}
+	
+	private void printTreeNode(int []path, int lenth) {
+		for(int i=0;i<lenth;i++) {
+			System.out.print(path[i]+",");
+		}
+		System.out.println();
+	}
+	
+	
+	public void question21_matchGivenSumOfPath() {
+		BinTree bt=new BinTree();
+		//while(true) {
+			BinTreeNode root=bt.createBinTree(30);
+			System.out.println();
+			int sum=120;
+			int[] path=new int[100];
+			int pathLen=0;
+			findPath(root,path,pathLen,sum);
+		//}
+	}
+	
+	private void findPath(BinTreeNode root, int[] path,int pathLen,int sum) {
+		if(root!=null) {
+			path[pathLen++]=root.getData();
+			if(Arrays.stream(path).sum()==sum) {
+				printTreeNode(path,pathLen);
+				return ;
+			}
+			
+			findPath(root.getLeft(),path,pathLen,sum);
+			findPath(root.getRight(),path,pathLen,sum);
+			
+		}
+	}
 	
 	
 	public void question22_SumTreeNode() {
@@ -468,13 +525,119 @@ public class Exam1 {
 			}
 		}
 		
-		System.out.println(sum);
+		System.out.println(sum);	
+	}
+	
+	public void question24_exchangeLeftRight() {
 		
+		BinTree bt=new BinTree();
+		BinTreeNode root=bt.createBinTree(10);
+		System.out.println();
+		bt.preOrderTree(root);
+		mirrorLeftRight(root);
+		System.out.println();
+		bt.preOrderTree(root);	
+	}
+	
+	private void mirrorLeftRight(BinTreeNode root) {
+		if(root!=null) {
+			BinTreeNode left=root.getLeft();
+			BinTreeNode right=root.getRight();
+			root.setRight(left);
+			root.setLeft(right);
+			
+			if(root.getLeft()!=null) {
+				mirrorLeftRight(root.getLeft());
+			}
+			if(root.getRight()!=null) {
+				mirrorLeftRight(root.getRight());
+
+			}
+		}
+		
+	}
+	
+	public void question25_isMirrowForLeftRight() {
+		BinTree bt=new BinTree();
+		BinTreeNode root=bt.createBinTree(10);
+		BinTreeNode root2=bt.clone(root);
+//		mirrorLeftRight(root2);
+		
+		boolean isMirrow=isMirrowLeftRight(root,root2);
+		System.out.print(isMirrow);
+		
+	}
+	
+	private boolean isMirrowLeftRight(BinTreeNode left, BinTreeNode right) { 
+		if(left==null&&right==null) return true;
+		if(left==null||right==null) return false;
+		return left.getData()==right.getData()&&isMirrowLeftRight(left.getLeft(),right.getRight())
+				&&isMirrowLeftRight(left.getRight(),right.getLeft());
+		
+	}
+	
+	
+	public void question26_BuildTree() {
+		int[] inOrder=new int[]{4,2,5,1,6,3};
+		int[] preOrder=new int[] {1,2,4,5,3,6};
+		int preindex=0;
+		BinTreeNode root= buildTreeNode(inOrder,preOrder,0,inOrder.length-1);
+		BinTree bt=new BinTree();
+		bt.inOrderTree(root);
+	}
+	static int preindex=0;
+		
+	public BinTreeNode buildTreeNode(int[] inOrder,int[] preOrder, int start, int end) {
+		
+		if(start>end) return null;		
+		BinTreeNode root=new BinTreeNode();
+		root.setData(preOrder[preindex]);
+		preindex++;
+		if(start==end) return root;
+		int inindex=searchInInOrder(inOrder, root.getData());
+		root.setLeft(buildTreeNode(inOrder,preOrder,start,inindex-1));
+		root.setRight(buildTreeNode(inOrder,preOrder,inindex+1,end));
+		return root;
+	}
+	
+	public int searchInInOrder(int[] inOrder, int data) {
+		for(int i=0;i<inOrder.length;i++) {
+			if(inOrder[i]==data) {
+				return i;
+			}
+		}
+		return 0;
+	}
+	
+	public void question28_printAncester() {
+		
+		BinTree bt=new BinTree();
+		BinTreeNode root=bt.createBinTree(30);
+		System.out.println();
+		int[] path=new int[100];
+		int pathLen=0;
+		int data=30;
+		printPath(root,path,pathLen,data);
+		
+		
+		
+	}
+	
+	private void printPath(BinTreeNode root, int[] path,int pathLen, int data) {
+		if(root!=null) {
+			path[pathLen++]=root.getData();
+			if(root.getData()==data) {
+				printTreeNode(path,pathLen);
+			}
+			printPath(root.getLeft(),path,pathLen,data);
+			printPath(root.getRight(),path,pathLen,data);
+			
+		}
 	}
 	
 	public static void main(String[] args) {
 		Exam1 ex=new Exam1();
-		ex.question23_SumTreeNode();
+		ex.question28_printAncester();
 	}
 
 }
