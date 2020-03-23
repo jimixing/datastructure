@@ -26,6 +26,73 @@ public class BinTree {
 		return source[0];
 	}
 	
+	
+	public TreeNode createTree() {
+		TreeNode root=new TreeNode();
+		root.setData(2);
+		TreeNode child1=new TreeNode();
+		child1.setData(10);
+		root.setChild(child1);
+		
+		TreeNode child2=new TreeNode();
+		child2.setData(22);
+		child1.setChild(child2);
+		
+		TreeNode sil1=new TreeNode();
+		sil1.setData(13);
+		child1.setSilbling(sil1);
+		
+		TreeNode sil21=new TreeNode();
+		sil21.setData(24);
+		sil1.setChild(sil21);
+		TreeNode sil22=new TreeNode();
+		sil22.setData(25);
+		sil21.setSilbling(sil22);
+		
+		TreeNode sil2=new TreeNode();
+		sil2.setData(14);
+		sil1.setSilbling(sil2);
+		TreeNode sil3=new TreeNode();
+		sil3.setData(15);
+		sil2.setSilbling(sil3);
+		
+		TreeNode sil31=new TreeNode();
+		sil31.setData(26);
+		sil3.setChild(sil31);
+		
+		return root;
+		
+		
+	}
+	
+	public void levelOrderTree(TreeNode root) {
+
+		ArrayQueue<TreeNode> aq=new ArrayQueue<TreeNode>(TreeNode.class);
+		aq.enqueue(root);
+		while(!aq.isEmpty()) {
+			TreeNode node=aq.dequeue();
+			System.out.print(node.getData()+",");
+
+			if(node.getChild()!=null) {
+				aq.enqueue(node.getChild());
+				TreeNode temp=node.getChild().getSilbling();
+				while(temp!=null) {
+					aq.enqueue(temp);
+					temp=temp.getSilbling();
+				}
+			}
+			
+			
+		}
+		
+	
+		
+		
+	}
+
+	
+	
+	
 	public BinTreeNode clone(BinTreeNode root) {
 		if(root!=null) {
 			BinTreeNode node=new BinTreeNode();

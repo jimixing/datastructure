@@ -8,6 +8,8 @@ import com.jimmy.data.structure.queue.ArrayQueue;
 import com.jimmy.data.structure.stack.ArrayStack;
 import com.jimmy.data.structure.tree.BinTree;
 import com.jimmy.data.structure.tree.BinTreeNode;
+import com.jimmy.data.structure.tree.BinTreeThreeNode;
+import com.jimmy.data.structure.tree.TreeNode;
 
 public class Exam1 {
 
@@ -633,9 +635,160 @@ public class Exam1 {
 		}
 	}
 	
+	
+	public void question29_findLatesAncestor() {
+		BinTree bt=new BinTree();
+		while(true) {
+			BinTreeNode root=bt.createBinTree(10);
+			System.out.println();
+			if(bt.findTreeNode(root, 20)!=null&&bt.findTreeNode(root, 30)!=null) {
+				BinTreeNode node=findLatesAncestor(root, 20,30);
+				System.out.println(node.getData());
+				break;
+			}
+		}	
+	}
+	public BinTreeNode findLatesAncestor(BinTreeNode root, int a, int b) {
+		if(root!=null) {
+			if(root.getData()==a||root.getData()==b) {
+				return  root;
+			}
+			
+			BinTreeNode left=findLatesAncestor(root.getLeft(), a, b);
+			BinTreeNode right=findLatesAncestor(root.getRight(), a, b);
+			
+			if(left!=null&&right!=null) {
+				return root;
+			}
+			
+			return left!=null?left:right;
+			
+			
+		}
+		return null;
+	}
+	
+	
+	public void question30_zigzag() {
+		BinTree bt=new BinTree();
+
+		BinTreeNode root=bt.createBinTree(30);
+		System.out.println();
+		ArrayStack<BinTreeNode> as1=new ArrayStack<BinTreeNode>(BinTreeNode.class);
+		ArrayStack<BinTreeNode> as2=new ArrayStack<BinTreeNode>(BinTreeNode.class);
+
+		as1.push(root);
+		while(!(as1.isEmpty()&&as2.isEmpty())){
+			while(!as1.isEmpty()) {
+				BinTreeNode node=as1.pop();
+				System.out.print(node.getData()+",");
+				if(node.getLeft()!=null) {
+					as2.push(node.getLeft());
+				}
+				if(node.getRight()!=null) {
+					as2.push(node.getRight());
+				}
+			}
+			while(!as2.isEmpty()) {
+				BinTreeNode node=as2.pop();
+				System.out.print(node.getData()+",");
+				
+				if(node.getRight()!=null) {
+					as1.push(node.getRight());
+				}
+				if(node.getLeft()!=null) {
+					as1.push(node.getLeft());
+				}
+			}
+			
+		}
+		
+	}
+	
+	public void question34_fillSilibing() {
+		BinTree bt=new BinTree();
+		int length=10;
+		BinTreeThreeNode[] source=new  BinTreeThreeNode[length];
+		for(int i=0;i<length;i++) {
+			int data=(int)(50*Math.random());
+			source[i]=new BinTreeThreeNode();
+			source[i].setData(data);
+			System.out.print(data+",");
+		}
+		for(int i=0;i<length/2;i++) {
+			if(2*i+1<length) {
+				source[i].setLeft(source[2*i+1]);
+			}
+			if(2*i+2<length) {
+				source[i].setRight(source[2*i+2]);
+			}
+			
+		}
+		BinTreeThreeNode root=source[0];
+
+		System.out.println();
+		ArrayQueue<BinTreeThreeNode> aq=new ArrayQueue<BinTreeThreeNode>(BinTreeThreeNode.class);
+		aq.enqueue(root);
+		aq.enqueue(null);
+		while(!aq.isEmpty()) {
+			BinTreeThreeNode node=aq.dequeue();
+			BinTreeThreeNode temp;
+			if(node==null) {
+				break;
+			}
+			if(node.getLeft()!=null) {
+				aq.enqueue(node.getLeft());
+			}
+			if(node.getRight()!=null) {
+				aq.enqueue(node.getRight());
+			}
+			while(true) {	
+				temp=aq.dequeue();
+				if(temp==null) {
+					aq.enqueue(null);
+					break;
+				}else {
+					node.setSilbling(temp);
+					if(temp.getLeft()!=null) {
+						aq.enqueue(temp.getLeft());
+					}
+					if(temp.getRight()!=null) {
+						aq.enqueue(temp.getRight());
+					}
+					
+					node=temp;
+				}
+			}
+					
+					
+		}
+
+	}
+
+	public void question36_calSumOfTree() {
+		BinTree bt=new BinTree();
+		TreeNode root=bt.createTree();
+		int sum=sumOfTree(root);
+		System.out.print(sum);
+		
+	}
+	private int sumOfTree(TreeNode root) {
+		if(root!=null) {
+			return root.getData()+sumOfTree(root.getChild())+sumOfTree(root.getSilbling());
+		}
+		return 0;
+	}
+	
+	public void question35_printTree() {
+		BinTree bt=new BinTree();
+		TreeNode root=bt.createTree();
+		bt.levelOrderTree(root);
+	}
+	
+	
 	public static void main(String[] args) {
 		Exam1 ex=new Exam1();
-		ex.question28_printAncester();
+		ex.question35_printTree();
 	}
 
 }
