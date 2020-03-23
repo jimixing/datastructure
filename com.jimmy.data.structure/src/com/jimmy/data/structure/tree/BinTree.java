@@ -81,13 +81,41 @@ public class BinTree {
 					temp=temp.getSilbling();
 				}
 			}
-			
-			
 		}
-		
+	}
 	
+	public TreeNode findNodeInTree(TreeNode root, int data) {
+		ArrayQueue<TreeNode> aq=new ArrayQueue<TreeNode>(TreeNode.class);
+		aq.enqueue(root);
+		while(!aq.isEmpty()) {
+			TreeNode node=aq.dequeue();
+			if(node.getData()==data) {
+				return node;
+			}
+			if(node.getChild()!=null) {
+				aq.enqueue(node.getChild());
+				TreeNode temp=node.getChild().getSilbling();
+				while(temp!=null) {
+					aq.enqueue(temp);
+					temp=temp.getSilbling();
+				}
+			}
+		}
+		return null;
 		
-		
+	}
+	
+	
+	public int countOfSilibing(TreeNode root) {
+		int count=0;
+		if(root!=null) {
+			TreeNode sil=root.getSilbling();
+			while(sil!=null) {
+				count++;
+				sil=sil.getSilbling();
+			}
+		}
+		return count;
 	}
 
 	

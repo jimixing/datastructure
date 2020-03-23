@@ -784,11 +784,39 @@ public class Exam1 {
 		TreeNode root=bt.createTree();
 		bt.levelOrderTree(root);
 	}
+	public void question40_countOfNodeSilb() {
+		BinTree bt=new BinTree();
+		TreeNode root=bt.createTree();
+		
+		TreeNode node=bt.findNodeInTree(root,13);
+		int count=bt.countOfSilibing(node);
+		System.out.print(count);
+		
+	}
+	
+	
+	public void question41_isIsomorphic() {
+		BinTree bt=new BinTree();
+		TreeNode root1=bt.createTree();
+		TreeNode root2=bt.createTree();
+
+		boolean ismorphic=ismorphic(root1,root2);
+		System.out.print(ismorphic);
+		
+	}
+	
+	private boolean ismorphic(TreeNode node1, TreeNode node2) {
+		if(node1==null&&node2==null)return true;
+		else if(node1==null||node2==null) return false;
+		else {
+			return ismorphic(node1.getChild(),node2.getChild())&&ismorphic(node1.getSilbling(),node2.getSilbling());
+		}
+	}
 	
 	
 	public static void main(String[] args) {
 		Exam1 ex=new Exam1();
-		ex.question35_printTree();
+		ex.question41_isIsomorphic();
 	}
 
 }
