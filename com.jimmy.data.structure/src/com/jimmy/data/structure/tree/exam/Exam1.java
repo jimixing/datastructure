@@ -813,10 +813,29 @@ public class Exam1 {
 		}
 	}
 	
+	public void question43_sumOfChild() {
+		BinTree bt=new BinTree();
+		TreeNode root1=bt.createTree();
+		TreeNode node=bt.findNodeInTree(root1,13);
+
+		TreeNode child=node.getChild();
+		int count=0;
+		if(child!=null) {
+			count++;
+			while(child.getSilbling()!=null) {
+				count++;
+				child=child.getSilbling();
+			}
+		}
+		System.out.print(count);
+		
+	}
+	
+	
 	
 	public static void main(String[] args) {
 		Exam1 ex=new Exam1();
-		ex.question41_isIsomorphic();
+		ex.question43_sumOfChild();
 	}
 
 }
