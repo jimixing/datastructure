@@ -26,6 +26,8 @@ public class BinTree {
 		return source[0];
 	}
 	
+
+	
 	
 	public TreeNode createTree() {
 		TreeNode root=new TreeNode();
@@ -255,7 +257,6 @@ public class BinTree {
 		ArrayStack<BinTreeNode> stack=new ArrayStack<BinTreeNode>(BinTreeNode.class);
 		stack.push(root);
 		while(!stack.isEmpty()) {
-
 			BinTreeNode head=stack.top();
 			if(head.getLeft()!=null) {
 				stack.push(head.getLeft());

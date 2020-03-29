@@ -6,6 +6,7 @@ import java.util.List;
 
 import com.jimmy.data.structure.queue.ArrayQueue;
 import com.jimmy.data.structure.stack.ArrayStack;
+import com.jimmy.data.structure.tree.BinSearchTree;
 import com.jimmy.data.structure.tree.BinTree;
 import com.jimmy.data.structure.tree.BinTreeNode;
 import com.jimmy.data.structure.tree.BinTreeThreeNode;
@@ -831,11 +832,116 @@ public class Exam1 {
 		
 	}
 	
+	public void question45_findNextNodeOfPreOrder() {
+		BinTree bt=new BinTree();
+		BinTreeNode root=bt.createBinTree(10);
+		while(true) {
+			if(bt.findTreeNode(root, 10)!=null) {
+				break;
+			}
+			System.out.println();
+			root=bt.createBinTree(10);
+
+		}
+		ArrayStack<BinTreeNode> as=new ArrayStack<BinTreeNode>(BinTreeNode.class);
+
+		as.push(root);
+		int data=10;
+		BinTreeNode temp=null;
+		
+		while(!as.isEmpty()) {
+			BinTreeNode node=as.pop();
+			if(node.getData()==data) {
+				temp=node;
+				if(temp.getLeft()!=null) {
+					 temp=temp.getLeft();
+				}else {
+					if(temp.getRight()!=null) {
+						 temp=temp.getRight();
+					}
+
+					while(temp.getRight()==null) {
+						temp=as.pop();
+						
+					}
+					temp=node;
+				}
+				break;
+	
+			}
+			if(node.getRight()!=null) {
+				as.push(node.getLeft());
+			}
+			if(node.getLeft()!=null) {
+				as.push(node.getRight());
+			}
+
+		}
+		System.out.println();
+		System.out.print(temp.getData());
+		
+		
+	}
+	
+	public void question46_inOrderSuccessor() {
+		BinTree bt=new BinTree();
+		BinTreeNode root=bt.createBinTree(10);
+		while(true) {
+			if(bt.findTreeNode(root, 10)!=null) {
+				break;
+			}
+			System.out.println();
+			root=bt.createBinTree(10);
+
+		}
+		ArrayStack<BinTreeNode> stack=new ArrayStack<BinTreeNode>(BinTreeNode.class);
+
+		stack.push(root);
+		int data=10;
+		BinTreeNode temp=null;
+		while(!stack.isEmpty()) {
+			BinTreeNode head=stack.top();
+			if(head.getData()==data) {
+				if(head.getRight()!=null) {
+					temp=head.getRight();
+					while(temp.getLeft()!=null) {
+						temp=temp.getLeft();
+					}
+					
+				}else {
+					temp=stack.pop();
+				}
+				break;
+				
+			}
+			if(head.getLeft()!=null) {
+				stack.push(head.getLeft());
+				head.setLeft(null);
+			}else {
+				BinTreeNode node=stack.pop();
+				if(node.getRight()!=null) {
+					stack.push(node.getRight());
+				}
+			}
+		}
+		System.out.println();
+		System.out.print(temp.getData());
+		
+	}
+	
+	
+	public void question46_1_createBinSearchTree() {
+		BinSearchTree bt=new BinSearchTree();
+		BinTreeNode root=bt.createBinSearchTree(10);
+		bt.inOrderTree(root);
+		
+		
+	}
 	
 	
 	public static void main(String[] args) {
 		Exam1 ex=new Exam1();
-		ex.question43_sumOfChild();
+		ex.question46_1_createBinSearchTree();
 	}
 
 }
