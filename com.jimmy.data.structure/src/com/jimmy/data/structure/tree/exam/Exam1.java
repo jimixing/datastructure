@@ -933,15 +933,198 @@ public class Exam1 {
 	public void question46_1_createBinSearchTree() {
 		BinSearchTree bt=new BinSearchTree();
 		BinTreeNode root=bt.createBinSearchTree(10);
-		bt.inOrderTree(root);
+		bt.inOrderTree(root);	
+	}
+	public void question49_findLatestAncesor() {
+		BinSearchTree bt=new BinSearchTree();
+		BinTreeNode root=null;
+		int a=10,b=20;
+		while(true) {
+			root=bt.createBinSearchTree(10);
+			bt.inOrderTree(root);
+			System.out.println();
+			if(bt.findItem(root, a)&&bt.findItem(root, b)) {
+				BinTreeNode node=findLatestAncesor(root, a,b);
+				System.out.println(node.getData());
+				break;
+			}
+		}	
+	}
+	private BinTreeNode findLatestAncesor(BinTreeNode root,int a,int b) {
+		if(root==null) return null;
+		if(root.getData()<a) {
+			return findLatestAncesor(root.getRight(),a,b);
+		}else if(root.getData()>b) {
+			return findLatestAncesor(root.getLeft(),a,b);
+		}else {
+			return root;
+		}
+	}
+	
+	
+	public void question50_isBst() {
+		BinSearchTree bt=new BinSearchTree();
+		BinTreeNode root=bt.createBinSearchTree(10);
+		boolean isBST=isWrongBst(root);
+		System.out.print(isBST);
 		
+	}
+	private boolean isWrongBst(BinTreeNode root) {
+		if(root==null) return true;
+		if(root.getLeft()!=null) {
+			return root.getData()>root.getLeft().getData()&&isWrongBst(root.getLeft());
+		}
+		if(root.getRight()!=null) {
+			return root.getData()<root.getRight().getData()&&isWrongBst(root.getRight());
+		}
+		return  true;
+		
+	}
+	
+	public void question51_isBst() {
+		BinSearchTree bt=new BinSearchTree();
+		BinTreeNode root=bt.createBinSearchTree(10);
+		boolean isBST=isBst(root,bt);
+		System.out.print(isBST);
+
+	}
+	private boolean isBst(BinTreeNode root,BinSearchTree bt) {
+		if(root==null) return true;
+		if(root.getLeft()!=null) {
+			return root.getData()>bt.findMax(root.getLeft()).getData()&&isBst(root.getLeft(),bt);
+		}
+		if(root.getRight()!=null) {
+			return root.getData()<bt.findMin(root.getRight()).getData()&&isBst(root.getRight(),bt);
+		}
+		return  true;
+	}
+	
+	public void question52_isBst() {
+		BinSearchTree bt=new BinSearchTree();
+		BinTreeNode root=bt.createBinSearchTree(10);
+		int[] array=new int[10];
+		int pos=0;
+		ArrayStack<BinTreeNode> stack=new ArrayStack<BinTreeNode>(BinTreeNode.class);
+		stack.push(root);
+		while(!stack.isEmpty()) {
+			BinTreeNode head=stack.top();
+			if(head.getLeft()!=null) {
+				stack.push(head.getLeft());
+				head.setLeft(null);
+			}else {
+				BinTreeNode node=stack.pop();
+				array[pos++]=node.getData();
+				if(node.getRight()!=null) {
+					stack.push(node.getRight());
+				}
+			}
+		}
+		boolean flag=true;
+		System.out.print(Arrays.toString(array));
+		for(int i=0;i<array.length-1;i++) {
+			if(array[i]>array[i+1]) {
+				flag=false;
+				break;
+					
+			}
+		}
+		
+		System.out.print(flag);
+		
+	}
+	
+	public void question54_BSTconvertToBioList() {
+		BinSearchTree bt=new BinSearchTree();
+		BinTreeNode root=bt.createBinSearchTree(10);
+		BinTreeNode left=BSTconvertToBioList(root);
+		BinTreeNode left2=left;
+		while(left2.getRight()!=null) {
+			System.out.print(left2.getData()+",");
+			left2=left2.getRight();
+		}
+		left.setLeft(left2);
+		left2.setRight(left);
+	}
+	
+	private BinTreeNode BSTconvertToBioList(BinTreeNode root) {
+		if(root==null) return null;
+		if(root.getLeft()==null&&root.getRight()==null) return root;
+		BinTreeNode left=root;
+		BinTreeNode right=null;
+		if(root.getLeft()!=null) {
+			left=BSTconvertToBioList(root.getLeft());
+			while(left.getRight()!=null)left=left.getRight();
+			if(left!=null) {
+				left.setRight(root);
+				root.setLeft(left);
+			}
+		}
+		if(root.getRight()!=null) {
+			right=BSTconvertToBioList(root.getRight());
+			right.setLeft(root);
+			root.setRight(right);
+		}
+		while(left.getLeft()!=null) {
+			left=left.getLeft();
+		}
+		return left;
+		
+		
+	}
+
+	public void question55_BiolistConvertToBST(){
+		BinSearchTree bt=new BinSearchTree();
+		BinTreeNode root=bt.createBinSearchTree(10);
+		bt.inOrderTree(root);
+		System.out.println();
+		BinTreeNode left=BSTconvertToBioList(root);
+		BinTreeNode root2=BiolistConvertToBST(left);
+		bt.inOrderTree(root2);
+		
+	}
+	private BinTreeNode BiolistConvertToBST(BinTreeNode head) {
+		if(head==null||head.getRight()==null) return head;
+		
+		BinTreeNode temp=findMiddleOfNode(head);
+		BinTreeNode left=head;
+		while(left.getRight()!=temp) {
+			left=left.getRight();
+		}
+		BinTreeNode right=temp.getRight();
+		left.setRight(null);
+		if(right!=null) {
+			right.setLeft(null);
+		}
+		
+		BinTreeNode left2=BiolistConvertToBST(head);
+		BinTreeNode right2=BiolistConvertToBST(right);
+		temp.setLeft(left2);
+		temp.setRight(right2);		
+		
+		return temp;
+		
+	}
+	
+	private BinTreeNode findMiddleOfNode(BinTreeNode head) {
+		
+		BinTreeNode slow=head;
+		BinTreeNode fast=head;
+		while(fast!=null) {
+			if(fast.getRight()!=null) {
+				fast=fast.getRight().getRight();
+			}else {
+				break;
+			}
+			slow=slow.getRight();
+		}
+		return slow;
 		
 	}
 	
 	
 	public static void main(String[] args) {
 		Exam1 ex=new Exam1();
-		ex.question46_1_createBinSearchTree();
+		ex.question55_BiolistConvertToBST();
 	}
 
 }
