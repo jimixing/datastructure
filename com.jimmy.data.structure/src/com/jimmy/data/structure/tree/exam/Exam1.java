@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import com.jimmy.data.structure.list.SingListNode;
 import com.jimmy.data.structure.queue.ArrayQueue;
 import com.jimmy.data.structure.stack.ArrayStack;
 import com.jimmy.data.structure.tree.BinSearchTree;
@@ -1121,10 +1122,245 @@ public class Exam1 {
 		
 	}
 	
+	public void question56_sortedArrayConvertToBST() {
+		int length=13;
+		int[] array=new int[length];
+		for(int i=0;i<length;i++) {
+			array[i]=(int)(50*Math.random());
+		}
+		Arrays.sort(array);
+		System.out.print(Arrays.toString(array));
+		System.out.println();
+		BinTreeNode root=sortedArrayConvertToBST(array,0,array.length-1);
+		BinSearchTree bt=new BinSearchTree();
+		bt.inOrderTree(root);
+	}
+	
+	private BinTreeNode sortedArrayConvertToBST(int[] array,int start,int end) {
+		if(start==end) {
+			BinTreeNode node=new BinTreeNode();
+			node.setData(array[start]);
+			return  node;
+		}
+		if(start>end) {
+			return null;
+		}
+		BinTreeNode middle=findMiddle(array,start,end);
+		BinTreeNode left=sortedArrayConvertToBST(array,start,(int)((start+end)/2)-1);
+		BinTreeNode right=sortedArrayConvertToBST(array,(int)((start+end)/2)+1,end);
+		middle.setLeft(left);
+		middle.setRight(right);
+		return middle;
+		
+		
+		
+	}
+	
+	private BinTreeNode findMiddle(int[] array,int start,int end) {
+		BinTreeNode node=new BinTreeNode();
+		node.setData(array[(int)(start+end)/2]);
+		return node;
+	}
+	
+	public void question59_findKElement() {
+		
+		BinSearchTree bt=new BinSearchTree();
+		BinTreeNode root=bt.createBinSearchTree(10);
+		bt.inOrderTree(root);
+		System.out.println();
+		int k=2;
+		int count=0;
+		ArrayStack<BinTreeNode> stack=new ArrayStack<BinTreeNode>(BinTreeNode.class);
+		stack.push(root);
+		BinTreeNode temp=null;
+		while(!stack.isEmpty()) {
+			BinTreeNode head=stack.top();
+			if(head.getLeft()!=null) {
+				stack.push(head.getLeft());
+				head.setLeft(null);
+			}else {
+				BinTreeNode node=stack.pop();
+				if(++count==k) {
+					temp=node;
+					break;
+				}
+			
+				if(node.getRight()!=null) {
+					stack.push(node.getRight());
+				}
+			}
+		}
+		System.out.print(temp.getData()+",");
+		
+	}
+	
+	
+	public void question61_BSTUnionAndInter() {
+		BinSearchTree bt=new BinSearchTree();
+		BinTreeNode root1=bt.createBinSearchTree(10);
+		bt.inOrderTree(root1);
+		System.out.println();
+		BinTreeNode root2=bt.createBinSearchTree(10);
+		bt.inOrderTree(root2);
+		System.out.println();
+
+		BinTreeNode root1list=BSTconvertToBioList(root1);
+		BinTreeNode root2list=BSTconvertToBioList(root2);
+		BinTreeNode unionlist=UnitOfList(root1list,root2list);
+		BinTreeNode root11=BiolistConvertToBST(unionlist);
+		bt.inOrderTree(root11);
+		System.out.println();
+		
+		
+		BinTreeNode root3=bt.createBinSearchTree(10);
+		bt.inOrderTree(root3);
+		System.out.println();
+		BinTreeNode root4=bt.createBinSearchTree(10);
+		bt.inOrderTree(root4);
+		System.out.println();
+		
+		BinTreeNode root3list=BSTconvertToBioList(root3);
+		BinTreeNode root4list=BSTconvertToBioList(root4);
+		BinTreeNode interlist=InterOfList(root3list,root4list);
+		BinTreeNode root31=BiolistConvertToBST(interlist);
+		bt.inOrderTree(root31);
+		System.out.println();
+		
+		
+	}
+	private BinTreeNode InterOfList(BinTreeNode head1,BinTreeNode head2) {
+		//BinTreeNode newHead=head1.getData()>head2.getData()?head2:head1;
+		BinTreeNode cur3=null,cur4=null;
+		BinTreeNode cur1=head1,cur2=head2;
+		int i=0;
+		
+		while(cur1!=null&&cur2!=null) {
+			if(cur1.getData()>cur2.getData()) {
+				cur2=cur2.getRight();
+			}else if(cur1.getData()<cur2.getData()) {
+				cur1=cur1.getRight();
+			}else {
+				if(i==0) {
+					cur3=cur1;
+					cur4=cur1;
+					cur1=cur1.getRight();
+					cur2=cur2.getRight();
+					cur3.setLeft(null);
+					i++;
+				}else {
+					cur3.setRight(cur1);
+					cur1.setLeft(cur3);
+					cur1=cur1.getRight();
+					cur2=cur2.getRight();
+					cur3=cur3.getRight();
+					cur3.setRight(null);
+				}
+				
+				
+			}
+		}
+		return  cur4;
+		
+		
+	}
+	
+	
+	private BinTreeNode UnitOfList(BinTreeNode root1list,BinTreeNode root2list) {
+		BinTreeNode head1=root1list;
+		BinTreeNode head2=root2list;
+		BinTreeNode newHead=head1.getData()>head2.getData()?head2:head1;
+		BinTreeNode cur3=newHead;
+		BinTreeNode cur1=head1,cur2=head2;
+		if(newHead==head1) {
+			cur1=head1.getRight();
+		}
+		if(newHead==head2) {
+			cur2=head2.getRight();
+		}
+		
+		while(cur1!=null&&cur2!=null) {
+			if(cur1.getData()>=cur2.getData()) {
+				cur3.setRight(cur2);
+				cur2.setLeft(cur3);
+				cur2=cur2.getRight();
+			}else {
+				cur3.setRight(cur1);
+				cur1.setLeft(cur3);
+				cur1=cur1.getRight();
+			}
+			cur3=cur3.getRight();
+			
+		}
+		while(cur1!=null) {
+			cur3.setRight(cur1);
+			cur1.setLeft(cur3);
+			cur3=cur3.getRight();
+			cur1=cur1.getRight();
+		}
+		while(cur2!=null) {
+			cur3.setRight(cur2);
+			cur2.setLeft(cur3);
+			cur3=cur3.getRight();
+			cur2=cur2.getRight();
+		}
+		return newHead;
+	}
+	
+	public void question64_printk1tok3() {
+		
+		BinSearchTree bt=new BinSearchTree();
+		BinTreeNode root1=bt.createBinSearchTree(10);
+		int k1=10, k2=35;
+		bt.inOrderTree(root1);
+		System.out.println();
+		printk1tok2(root1,k1, k2);
+		
+		
+	}
+	
+	private void printk1tok2(BinTreeNode root , int k1, int k2) {
+		if(root==null) return ;
+		if(root.getData()<k1) {
+			printk1tok2(root.getRight(),k1,k2);
+		}else if(root.getData()>k2) {
+			printk1tok2(root.getLeft(),k1,k2);
+		}else {
+			System.out.print(root.getData()+",");
+			printk1tok2(root.getLeft(),k1,k2);
+			printk1tok2(root.getRight(),k1,k2);
+		}
+	}
+	
+	
+	public void question65_printk1tok2() {
+		BinSearchTree bt=new BinSearchTree();
+		BinTreeNode root=bt.createBinSearchTree(10);
+		int k1=10, k2=35;
+		bt.inOrderTree(root);
+		System.out.println();
+		ArrayQueue<BinTreeNode> aq=new ArrayQueue<BinTreeNode>(BinTreeNode.class); 
+		aq.enqueue(root);
+		while(!aq.isEmpty()) {
+			BinTreeNode node=aq.dequeue();
+			if(node==null) continue;
+			if(node.getData()>k1&&node.getData()<k2) {
+				System.out.print(node.getData()+",");
+				aq.enqueue(node.getLeft());
+				aq.enqueue(node.getRight());
+			}else if(node.getData()<k1) {
+				aq.enqueue(node.getRight());
+			}else if(node.getData()>k2) {
+				aq.enqueue(node.getLeft());
+			}
+		}
+		
+		
+	}
+	
 	
 	public static void main(String[] args) {
 		Exam1 ex=new Exam1();
-		ex.question55_BiolistConvertToBST();
+		ex.question65_printk1tok2();
 	}
 
 }
