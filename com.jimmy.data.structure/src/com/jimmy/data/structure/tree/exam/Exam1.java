@@ -1358,9 +1358,73 @@ public class Exam1 {
 	}
 	
 	
+	public void question67_cutBST() {
+		BinSearchTree bt=new BinSearchTree();
+		BinTreeNode root=bt.createBinSearchTree(4);
+		int k1=10, k2=35;
+		bt.inOrderTree(root);
+		System.out.println();
+		cutBST(root,k1,k2);
+		bt.inOrderTree(root);
+		
+	}
+	private void cutBST(BinTreeNode root, int k1, int k2) {
+		if(root==null)return;
+		if(root.getData()>k1) {
+			if(root.getLeft()!=null&&root.getLeft().getData()<k1) {
+				root.getLeft().setLeft(null);;
+			}else {
+				cutBST(root.getLeft(),k1,k2);
+			}
+		}else {
+			cutBST(root.getRight(),k1,k2);
+		}
+		if(root.getData()<k2) {
+			if(root.getRight()!=null&&root.getRight().getData()>k2) {
+				root.getRight().setRight(null);
+			}else {
+				cutBST(root.getRight(),k1,k2);
+			}
+		}else {
+			cutBST(root.getLeft(),k1,k2);
+		}
+		
+
+		
+	}
+	
+	
+	public void question69_isSameBST() {
+//		int[] b1=new int[] {10,5,20,15,30};
+//		int[] b2=new int[] {10,20,15,30,5};
+		int[] b1=new int[] {10,5,20,15,30};
+		int[] b2=new int[] {10,15,30,20,5};
+
+		BinSearchTree bt=new BinSearchTree();
+		BinTreeNode root1=bt.createBinSearchTree(b1);
+		BinTreeNode root2=bt.createBinSearchTree(b2);
+		boolean isSame=isSameBst(root1,root2);
+		System.out.println(isSame);
+	}
+	
+	private boolean isSameBst(BinTreeNode root1, BinTreeNode root2) {
+		boolean isSame=true;
+		if(root1!=null&&root2!=null) {
+			return isSameBst(root1.getLeft(),root2.getLeft())&&root1.getData()==root2.getData()
+					&&isSameBst(root1.getRight(),root2.getRight());	
+		}else if(root1!=null||root2!=null) {
+			isSame= false;
+		}
+		return isSame;
+	}
+	
+	
+	
+	
+	
 	public static void main(String[] args) {
 		Exam1 ex=new Exam1();
-		ex.question65_printk1tok2();
+		ex.question69_isSameBST();
 	}
 
 }

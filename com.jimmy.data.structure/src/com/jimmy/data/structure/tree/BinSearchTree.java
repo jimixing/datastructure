@@ -4,6 +4,19 @@ import com.jimmy.data.structure.stack.ArrayStack;
 
 public class BinSearchTree extends BinTree{
 	
+	
+	public BinTreeNode createBinSearchTree(int[] array) {
+		BinTreeNode root=new BinTreeNode();
+		root.setData(array[0]);
+		for(int i=1;i<array.length;i++) {
+			BinTreeNode node=new BinTreeNode();
+			node.setData(array[i]);
+			insertIntoTree(node,root);
+		}
+		return root;
+		
+	}
+	
 	public   BinTreeNode createBinSearchTree(int length) {
 		
 		BinTreeNode root=new BinTreeNode();
