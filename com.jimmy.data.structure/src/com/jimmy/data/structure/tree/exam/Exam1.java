@@ -1418,9 +1418,49 @@ public class Exam1 {
 		return isSame;
 	}
 	
+	static private int init=0;
+	public void question70_buildHb0() {
+		
+		int h=3;
+		BinTreeNode root=buildHb0(h);
+		
+	}
 	
+	private BinTreeNode buildHb0(int h) {
+		BinTreeNode root=new BinTreeNode();
+		if(h==0) return null;
+		root.setLeft(buildHb0(h-1));
+		root.setData(init++);
+		root.setRight(buildHb0(h-1));
+		return root;
+		
+	}
 	
+	public void question74_isAVL() {
+		BinTree bt=new BinTree();
+		BinTreeNode root=bt.createBinTree(10);
+		int isavl=isAVL(root);
+		System.out.print(isavl);
+		
+		
+	}
 	
+	private int isAVL(BinTreeNode root) {
+		if(root==null) return 0;
+		int left=isAVL(root.getLeft());
+		if(left==-1) {
+			return left;
+		}
+		int right=isAVL(root.getRight());
+		if(right==-1) {
+			return right;
+		}
+		
+		if(Math.abs(left-right)>1) {
+			return -1;
+		}
+		return Math.max(left, right)+1;
+	}
 	
 	public static void main(String[] args) {
 		Exam1 ex=new Exam1();
