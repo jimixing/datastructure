@@ -4,9 +4,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import com.jimmy.data.structure.list.SingListNode;
 import com.jimmy.data.structure.queue.ArrayQueue;
 import com.jimmy.data.structure.stack.ArrayStack;
+import com.jimmy.data.structure.tree.AVLTreeNode;
 import com.jimmy.data.structure.tree.BinSearchTree;
 import com.jimmy.data.structure.tree.BinTree;
 import com.jimmy.data.structure.tree.BinTreeNode;
@@ -761,8 +761,6 @@ public class Exam1 {
 					node=temp;
 				}
 			}
-					
-					
 		}
 
 	}
@@ -1462,9 +1460,121 @@ public class Exam1 {
 		return Math.max(left, right)+1;
 	}
 	
+	
+	public void question75_createAVLTreeLeastNode() {
+		
+		int h=3;
+		AVLTreeNode root=createAVLTreeLeastNode(h);
+		
+	}
+	
+	private AVLTreeNode createAVLTreeLeastNode(int h) {
+		AVLTreeNode root=new AVLTreeNode();
+		if(h<=0)return null;
+		
+		root.setLeft(createAVLTreeLeastNode(h-1));
+		root.setData(init);
+		root.setRight(createAVLTreeLeastNode(h-2));
+		if(root.getLeft()==null) {
+			root.setHeight(1);
+		}else {
+			root.setHeight(root.getLeft().getHeight()+1);
+		}
+		return root;	
+		
+	}
+	
+	
+	public void question76_rangeCutNode() {
+		
+		BinTree bt=new BinTree();
+		BinTreeNode root=bt.createBinTree(10);
+		int a=10,b=35;
+		
+		int count=rangeCut(root, a,b);
+		System.out.println();
+		System.out.print(count);
+	}
+	
+	private int rangeCut(BinTreeNode root,int a,int b) {
+		if(root==null) return 0;
+		if(root.getData()>b) {
+			return rangeCut(root.getLeft(),a,b);
+		}else if(root.getData()<a) {
+			return rangeCut(root.getRight(),a,b);
+		}else {
+			return rangeCut(root.getLeft(),a,b)+rangeCut(root.getRight(),a,b)+1;
+		}
+		
+		
+	}
+	
+	public void question78_removeHalfNode() {
+		BinTree bt=new BinTree();
+		BinTreeNode root=bt.createBinTree(10);
+		
+		removeHalfNode(root);
+	}
+	private BinTreeNode removeHalfNode(BinTreeNode root) {
+		if(root==null) return null;
+		
+		BinTreeNode left=removeHalfNode(root.getLeft());
+		BinTreeNode right=removeHalfNode(root.getRight());
+		if(left==null&&right==null) return root;
+		if(left==null) {
+			return right;
+		}
+		if(right==null) {
+			return left;
+		}
+		return root;
+	}
+	
+	public void question79_removeAllLeaf() {
+		BinTree bt=new BinTree();
+		BinTreeNode root=bt.createBinTree(10);
+		removeAllLeaf(root);
+	}
+	private BinTreeNode removeAllLeaf(BinTreeNode root) {
+		if(root!=null) {
+			if(root.getLeft()==null&&root.getRight()==null) {
+				root=null;
+			}else {
+				root.setLeft(removeAllLeaf(root.getLeft()));
+				root.setRight(removeAllLeaf(root.getRight()));
+			}
+		}
+		return root;
+	}
+	
+	public void question80_rangeNode() {
+		BinTree bt=new BinTree();
+		BinTreeNode root=bt.createBinTree(10);
+		int a=10,b=35;
+		BinTreeNode result=rangeNode(root,a,b);
+		System.out.println();
+		bt.inOrderTree(result);
+		
+	}
+	
+	private BinTreeNode rangeNode(BinTreeNode root, int a,int b) {
+		if(root==null) return null;
+	
+		root.setLeft(rangeNode(root.getLeft(),a,b));
+		root.setRight(rangeNode(root.getRight(),a,b));
+		if(root.getData()<a) {
+			return root.getRight();
+		}else if(root.getData()>b) {
+			return root.getLeft();
+		}else {
+			return root;
+		}
+		
+	}
+	
 	public static void main(String[] args) {
 		Exam1 ex=new Exam1();
-		ex.question69_isSameBST();
+		ex.question80_rangeNode();
 	}
 
 }
