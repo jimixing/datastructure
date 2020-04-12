@@ -47,7 +47,6 @@ public class CountSorted {
 		System.out.println(Arrays.toString(array));
 		CountSorted ss=new CountSorted();
 		ss.countSort(array);
-
 	}
 
 }
