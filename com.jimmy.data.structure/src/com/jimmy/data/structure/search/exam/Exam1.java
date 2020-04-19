@@ -1043,9 +1043,69 @@ public class Exam1 {
 	}
 	
 	
+	public void question59_findNRepeate() {
+		int[] array=new int[] {2,2,2,4,3,2,2,2,2};
+		for(int i=0;i<array.length-2;i++) {
+			if(array[i]==array[i+1]||array[i]==array[i+2]) {
+				System.out.print("Main element is: "+array[i]);
+				break;
+			}
+		}	
+		
+	}
+	
+	
+	public void question60_findSingleEle() {
+		int[] array=new int[] {2,2,4,4,3,2,2,3,6};
+		int value=0;
+		for(int i=0;i<array.length;i++) {
+			value^=array[i];
+		}
+		System.out.print(value);
+	}
+	
+	
+	public void question61_FindNInBroken() {
+		int len=40;
+		boolean[] array=new boolean[len];
+		int broken=(int)(Math.random()*40);
+		int i=0;
+		for(;i<broken;i++) {
+			array[i]=false;
+		}
+		for(i=broken;i<len;i++) {
+			array[i]=true;
+		}
+		System.out.println("pos"+broken);
+		
+		int j=1;
+		for(i=1;i<len;) {
+			j=i*2;
+			if(j<len&&!array[i]&&array[j]) {
+				break;
+			}
+			i=i*2;
+		}
+		int middle=1;
+		while(i<j) {
+			middle=(i+j)/2;
+			if(!array[middle]&&array[middle+1]) {
+				break;
+			}
+			if(!array[middle]) {
+				i=middle;
+			}else {
+				j=middle;
+			}
+		}
+		System.out.print("pos"+middle);
+		
+		
+	}
+	
 	public static void main(String[] args) {
 		Exam1 ex=new Exam1();
-		ex.question58_findMainEle();
+		ex.question61_FindNInBroken();
 		
 	}
 
