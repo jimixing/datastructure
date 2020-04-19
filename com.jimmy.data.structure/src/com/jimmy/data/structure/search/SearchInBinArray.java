@@ -4,10 +4,10 @@ import java.util.Arrays;
 
 public class SearchInBinArray {
 	
-	public int search(int[] array,int data) {
-		int low=0;
-		int high=array.length-1;
-		while(low<high) {
+	public int search(int[] array,int low, int high,int data) {
+//		int low=0;
+//		int high=array.length-1;
+		while(low<=high) {
 			int middle=(low+high)/2;
 			if(array[middle]==data) {
 				return middle;
