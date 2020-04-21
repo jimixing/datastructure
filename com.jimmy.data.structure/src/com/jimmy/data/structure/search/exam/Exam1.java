@@ -1102,10 +1102,309 @@ public class Exam1 {
 		
 		
 	}
+	private int findLocalMin(int[]array, int left, int right) {
+		if(array[left]<array[left+1])return left;
+		if(array[right]<array[right-1])return right;
+		int middle=(left+right)/2;
+		if(array[middle]<array[middle-1]&&array[middle]<array[middle+1]) {
+			return middle;
+		}
+		if(array[middle-1]<array[middle]) {
+			return findLocalMin(array,left,middle);
+		}
+		if(array[middle+1]>array[middle]) {
+			return findLocalMin(array,middle,right);
+		}
+		return -1;
+		
+		
+	}
+	
+	private int[][] generateTwoDArray(int length){
+		int[][] array=new int[length][length];
+		int value=(int)(Math.random()*30);
+		int data=0;
+		for(int i=0;i<length;i++) {
+			array[i][0]=value;
+			for(int j=1;j<length;j++) {
+				int delta=(int)(Math.random()*5);
+				data=value+delta;
+				array[i][j]=data;
+				value=data;
+			}
+			int delta2=(int)(Math.random()*5);
+			data=array[i][0]+delta2;
+			value=data;
+		}
+		return array;
+		
+		
+	}
+	
+	public void question63_FindItem() {
+		int[][] array=generateTwoDArray(20);
+		for(int i=0;i<array.length;i++) {
+			System.out.println(Arrays.toString(array[i]));
+		}
+		int i=array.length-1,j=0;
+		int K=70;
+		int row=-1,col=-1;
+		while(i>=0&&j<array.length) {
+			if(array[i][j]<K) {
+				j++;
+			}else if(array[i][j]>K) {
+				i--;
+			}else {
+				row=i;
+				col=j;
+				break;
+			}
+		}
+		System.out.print("row:"+row+" col:"+col);
+		
+	}
+	
+	public void question62_findLocalMin() {
+		int[] array=generateArray();
+		
+		int pos=findLocalMin(array,0,array.length-1);
+		System.out.print(pos);
+		
+	}
+	
+	private int[][] generateTwoArray(int len){
+		int[][] array=new int[len][len];
+		for(int i=0;i<len;i++) {
+			for(int j=0;j<len;j++) {
+				int value=(int)(Math.random()*50);
+				array[i][j]=value;
+				
+			}
+		}
+		return array;
+		
+	}
+	
+	
+	
+	public void question64_findLocalMinInArrayTD() {
+		int[][] array=generateTwoArray(20);
+		for(int i=0;i<array.length;i++) {
+			System.out.println(Arrays.toString(array[i]));
+		}
+		
+		
+		
+	}
+	
+	
+	public void question65_findMostZero() {
+		int[][] array=new int[][] {
+			{1,1,1,1,1,0,0,0,0,0},
+			{1,1,1,1,1,1,1,0,0,0},
+			{1,1,1,1,1,0,0,0,0,0},
+			{1,1,1,1,1,1,1,0,0,0},
+			{1,1,1,0,0,0,0,0,0,0},
+			{1,1,1,1,1,1,1,0,0,0},
+			{1,1,1,1,1,0,0,0,0,0},
+			{1,1,1,1,1,1,0,0,0,0},
+			{1,1,0,0,0,0,0,0,0,0},
+			{1,1,1,1,1,1,1,0,0,0}
+		};
+		int maxZeroCount=0;
+		int j=Integer.MAX_VALUE;
+		for(int i=0;i<array.length;i++) {
+				j=array.length-1-maxZeroCount;
+				for(;j>=0;j--) {
+					if(array[i][j]==0) {
+						maxZeroCount++;
+					}else {
+						break;
+					}
+				}
+		}
+		System.out.print(maxZeroCount);
+	}
+	
+	public void question67_splitOddAndEven() {
+		int[] array=generateArray();
+		
+		int i=0,j=array.length-1;
+		while(i<j) {
+			while(i<j&&array[i]%2==0) {
+				i++;
+			}
+			while(i<j&&array[j]%2==1) {
+				j--;
+			}
+			int tem=array[i];
+			array[i]=array[j];
+			array[j]=tem;
+			
+		}
+		System.out.print(Arrays.toString(array));
+		
+	}
+	public void question68_splitZeroToOne() {
+		int[] array=new int[] {0,1,0,1,0,0,1,1,1,0};
+		int zeroCount=0;
+		for(int i=0;i<array.length;i++) {
+			if(array[i]==0) {
+				zeroCount++;
+			}
+		}
+		for(int i=0;i<zeroCount;i++) {
+			array[i]=0;
+		}
+		for(int i=zeroCount;i<array.length;i++) {
+			array[i]=1;
+		}
+		System.out.print(Arrays.toString(array));
+	}
+	
+	
+	public void question70_splitWithZeroOneTwo() {
+		int[]  array=new int[] {0,1,2,1,0,1,2,1,2,0,0,0,1};
+		
+		int i=0,j=array.length-1;
+		while(i<j) {
+			while(i<j&&array[i]!=2) {
+				i++;
+			}
+			while(i<j&&array[j]==2) {
+				j--;
+			}
+			int tem=array[i];
+			array[i]=array[j];
+			array[j]=tem;
+			i++;
+			j--;
+		}
+		i=0;
+		while(i<j) {
+			while(i<j&&array[i]!=1) {
+				i++;
+			}
+			while(i<j&&array[j]==1) {
+				j--;
+			}
+			int tem=array[i];
+			array[i]=array[j];
+			array[j]=tem;
+			i++;
+			j--;
+		}		
+		System.out.print(Arrays.toString(array));
+		
+	}
+	
+	
+	public void question71_findMaxDis() {
+		int[] array=generateArray();
+		
+		int min=array[0]>array[1]?array[1]:array[0];
+		int value=Integer.MIN_VALUE;
+		for(int i=2;i<array.length;i++) {
+			if(array[i]-min>value) {
+				value=array[i]-min;
+			}
+			if(array[i]<min) {
+				min=array[i];
+			}
+		}
+		System.out.print(value);
+	}
+	
+	public void question73_findZeroNumByMul() {
+		int K=200;
+		int number=0;
+		while(K>0) {
+			number+=K/5;
+			K=K/5;
+		}
+		
+		System.out.print(number);
+	}
+	
+	public void question75_reorderforOddEven() {
+		
+		int[] array=generateArray();//new int[] {1,3,5,7,2,4,6,8};
+		int Mid=array.length/2;
+		for(int i=0;i<array.length;i+=2,Mid++) {
+			for(int j=Mid;j>i+1;j--) {
+				int tem=array[j];
+				array[j]=array[j-1];
+				array[j-1]=tem;
+			}
+		}
+		System.out.print(Arrays.toString(array));
+	}
+	
+	
+	
+	public void question76_FindMaxDis() {
+		int[] array=generateArray();
+		
+		int dis=-1;
+		for(int i=0;i<array.length;i++) {
+			for(int j=i+1;j<array.length;j++) {
+				if(array[j]>array[i]&&(j-i)>dis) {
+					dis=j-i;
+				}
+			}
+		}
+		System.out.print(dis);
+
+		
+	}
+	public void question77_FindMaxDis() {
+		int[] array=generateArray();
+		
+		int[] leftMin=new int[array.length];
+		int[] rightMax=new int[array.length];
+		leftMin[0]=array[0];
+		for(int i=1;i<array.length;i++) {
+			leftMin[i]=Math.min(leftMin[0], array[i]);
+		}
+		rightMax[array.length-1]=array[array.length-1];
+		for(int i=array.length-2;i>=0;i--) {
+			rightMax[i]=Math.max(rightMax[i+1], array[i]);
+		}
+		int i=0,j=0,maxDis=-1;
+		while(i<array.length&&j<array.length) {
+			if(leftMin[i]<rightMax[j]) {
+				maxDis=Math.max(maxDis, j-i);
+				j++;
+			}else {
+				i++;
+			}
+		}
+		System.out.print(maxDis);
+		
+	}
+	
+	
+	public void question78_findIsOrder() {
+		int[] array=generateArray();
+				//new int []{12,13,34,45,35,67,12,34};
+		boolean isOrder=true;
+		
+		for(int i=0;i<array.length-1;i+=2) {
+			if(array[i]>array[i+1]) {
+				isOrder=false;
+				break;
+			}
+		}
+		
+		System.out.print(isOrder);
+
+		
+		
+	}
 	
 	public static void main(String[] args) {
 		Exam1 ex=new Exam1();
-		ex.question61_FindNInBroken();
+		ex.question75_reorderforOddEven();
 		
 	}
 
