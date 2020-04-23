@@ -848,6 +848,41 @@ public class Exam1 {
 		}
 	}
 	
+	private int findMiddle(int[] array1,int array1Left, int array1Right, int[]array2, int array2left,int array2Right) {
+		if(array1Left>array1Right)return -1;
+		if(array2left>array2Right) return -1;
+		
+		int array1Mid=(array1Left+array1Right)/2;
+		int array2Mid=(array2left+array2Right)/2;
+		if(array1[array1Mid]==array2[array2Mid]) {
+			return array1[array1Mid];
+		}else if(array1[array1Mid]<array2[array2Mid]) {
+			return findMiddle(array1,array1Mid+1,array1Right, array2,array2left,array2Mid-1 );
+		}else {
+			return findMiddle(array1,array1Left,array1Mid-1,array2,array2Mid+1,array2Right);
+		}
+		
+		
+	}
+	
+	
+	public void question45_findMiddle() {
+		int[] array1=generateArray();
+		int[] array2=generateArray();
+		MergeSorted ms=new MergeSorted();
+		ms.mergeSorted(array1, 0, array1.length-1);
+		ms.mergeSorted(array2, 0, array2.length-1);
+		
+		System.out.println(Arrays.toString(array1));
+		System.out.println(Arrays.toString(array2));
+		
+		int value=findMiddle(array1,0,array1.length-1,array2,0,array2.length);
+
+		System.out.println("Middle data is: "+value);
+		
+	}
+	
+	
 	
 	public void question46_findFirstRepeate() {
 		int[] array=generateArray();
@@ -1404,7 +1439,7 @@ public class Exam1 {
 	
 	public static void main(String[] args) {
 		Exam1 ex=new Exam1();
-		ex.question75_reorderforOddEven();
+		ex.question45_findMiddle();
 		
 	}
 
