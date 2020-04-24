@@ -340,12 +340,123 @@ public class Exam1 {
 		System.out.println("Kth value is "+value);
 	}
 
+	public void question16_findKth() {
+		int[] array=generateArray(10);
+		MergeSorted ms=new MergeSorted();
+		ms.mergeSorted(array, 0, array.length-1);
+		int k=2;
+		System.out.print("Kth value"+array[k-1]);
+		
+	}
+	
+	public void question17_findKth() {
+		int[] array=generateArray(10);
+		
+		Heap heap=new Heap(array.length,1);
+		for(int i=0;i<array.length;i++) {
+			heap.insert(array[i]);
+		}
+		int K=2;
+		for(int i=0;i<K;i++) {
+			int value=heap.deleteMin();
+			if(i==K-1) {
+				System.out.print("Kth value"+value);
+
+			}
+		}
+		
+	}
+	
+	public void question18_findKth() {
+		int[] array=generateArray(10);
+		int K=4;
+
+		Heap heap=new Heap(K,2);
+		for(int i=0;i<K;i++) {
+			heap.insert(array[i]);
+		}
+		for(int i=K;i<array.length-1;i++ ) {
+			if(array[i]<heap.getMax()) {
+				heap.deleteMax();
+				heap.insert(array[i]);
+			}
+		}
+		System.out.print("Kth value"+heap.getMax());
+
+	}
+	
+	public void question19_findNeighKth() {
+		int[] array=generateUpArray(20);
+
+		double mid=(array[10]+array[11])/2;
+		int K=4;
+		int i=10,j=11;
+		int m=0;
+		int[] res=new int[K];
+		while(j-i<=4) {
+			if(array[j]-mid>mid-array[i]) {
+				res[m++]=array[i];
+				i--;
+			}else {
+				res[m++]=array[j];
+				j++;
+			}
+		}
+		System.out.print(Arrays.toString(res));
+		
+	}
+	
+	public void question21_findCheapest() {
+		int[] array=generateArray(10);
+		double mean=Arrays.stream(array).average().getAsDouble();
+		int K=5;
+
+		Heap heap=new Heap(K,2);
+		for(int i=0;i<K;i++) {
+			heap.insert(array[i]);
+		}
+		for(int i=K;i<array.length-1;i++ ) {
+			if(array[i]<heap.getMax()) {
+				heap.deleteMax();
+				heap.insert(array[i]);
+			}
+		}
+		System.out.print("middle value : "+heap.getMax());
+		for(int i=0;i<array.length;i++) {
+			array[i]-=mean;
+		}
+	}
+	
+	
+	public void question22_find50largest() {
+		int K=1000000;
+		int M=50;
+		Heap heap=new Heap(M, 1);
+		for(int j=0;j<50;j++) {
+			heap.insert((int)(100000000*Math.random()));
+		}
+		
+		for(int i=0;i<K-1;i++) {
+			for(int j=0;j<50;j++) {
+				int value=(int)(100000000*Math.random());
+				if(value>heap.getMin()) {
+					heap.deleteMin();
+					heap.insert(value);
+				}
+			}
+			
+		}
+		System.out.print(heap);
+		
+		
+	}
+	
 	
 	
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		Exam1 ex=new Exam1();
-		ex.question14_findMiddle();
+		ex.question22_find50largest();
 		
 	}
 
