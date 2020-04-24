@@ -21,6 +21,21 @@ public class Exam1 {
 	}
 	
 	
+	public int[]  generateUpArray(int len) {
+		//int len=20;
+		int [] array=new int[len];
+		int value=(int)(Math.random()*50);
+		
+		
+		for(int i=0;i<len;i++) {
+			int data=(int)(Math.random()*60);
+			array[i]=data+value;
+			value=array[i];
+		}
+		System.out.println(Arrays.toString(array));
+		return array;
+	}
+	
 	public void question1_findMax() {
 		int[] array=generateArray(20);
 		int max=Integer.MIN_VALUE;
@@ -234,11 +249,79 @@ public class Exam1 {
 		
 	}
 	
+	private int findMid2(int[] array1,int array1Left, int array1Right,
+			int[] array2, int array2Left, int array2Right) {
+		int mid1=(array1Left+array1Right)/2;
+		int mid2=(array2Left+array2Right)/2;
+		
+		if(array1Right-array1Left+array2Right-array2Left<3) {
+			if(array1[array1Left]>array2[array2Left]&&array1[array1Right]<array2[array2Right]) {
+				return (array1[array1Left]+array1[array1Right])/2;
+			}else if(array1[array1Left]>array2[array2Left]&&array1[array1Right]>array2[array2Right]) {
+				return (array1[array1Left]+array2[array2Right])/2;
+			}else if(array1[array1Left]<array2[array2Left]&&array1[array1Right]<array2[array2Right]) {
+				return  (array2[array2Left]+array1[array1Right])/2;
+			}else if(array1[array1Left]<array2[array2Left]&&array1[array1Right]>array2[array2Right]){
+				return (array2[array2Left]+array2[array2Right])/2;
+			}else if(array1[array1Right]<array2[array2Left]) {
+				return (array1[array1Right]+array2[array2Left])/2;
+			}
+			
+		}
+		
+		if(array1[mid1]<array2[mid2]) {
+			return findMid2(array1,mid1+1, array1Right, array2,array2Left,mid2-1);
+		}else if(array1[mid1]>array2[mid2]) {
+			return findMid2(array1,array1Left, mid1-1, array2,mid2+1,array2Right);
+		}else {
+			return array1[mid1];
+		}
+		
+		
+		
+		
+	}
+	
+	
+	public void question14_findMiddle() {
+		int[] array1=generateUpArray(10);
+		int[] array2=generateUpArray(10);
+		
+		int value=findMid2(array1,0,array1.length-1,array2,0,array2.length-1);
+		System.out.println("Kth value is "+value);
+		
+	}
+	
+	private int findKth2(int[] array1,int a1left,int a1right, int[] array2,int a2left, int a2right, int K) {
+		
+		return 0;
+		
+	}
+	
+	
+	public void question15_findKth() {
+		int[] array1=generateUpArray(10);
+		int[] array2=generateUpArray(10);
+		int K=6;
+		int value=-1;
+		if(array1[K]<array2[0]) {
+			value=array1[K];
+		}else if(array2[K]<array1[0]) {
+			value=array2[K];
+		}else {
+			value=findKth2(array1,0,array1.length-1,array2,0,array2.length-1, K);
+
+		}
+		
+		System.out.println("Kth value is "+value);
+	}
+	
+	
 	
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		Exam1 ex=new Exam1();
-		ex.question10_findKth();
+		ex.question14_findMiddle();
 		
 	}
 
