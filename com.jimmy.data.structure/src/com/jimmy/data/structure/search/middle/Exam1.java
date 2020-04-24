@@ -25,10 +25,8 @@ public class Exam1 {
 		//int len=20;
 		int [] array=new int[len];
 		int value=(int)(Math.random()*50);
-		
-		
 		for(int i=0;i<len;i++) {
-			int data=(int)(Math.random()*60);
+			int data=(int)(Math.random()*30);
 			array[i]=data+value;
 			value=array[i];
 		}
@@ -286,15 +284,42 @@ public class Exam1 {
 	public void question14_findMiddle() {
 		int[] array1=generateUpArray(10);
 		int[] array2=generateUpArray(10);
+		int K1=10;
+		int K2=11;
+		int value1=findKth2(array1,0,array1.length-1,array2,0,array2.length-1, K1);
+		int value2=findKth2(array1,0,array1.length-1,array2,0,array2.length-1, K2);
+		System.out.println("Middle value is "+(value1+value2)/2);
 		
-		int value=findMid2(array1,0,array1.length-1,array2,0,array2.length-1);
-		System.out.println("Kth value is "+value);
+//		int value=findMid2(array1,0,array1.length-1,array2,0,array2.length-1);
+//		System.out.println("Kth value is "+value);
 		
 	}
 	
 	private int findKth2(int[] array1,int a1left,int a1right, int[] array2,int a2left, int a2right, int K) {
+		int a1Int=a1right-a1left;
+		int a2Int=a2right-a2left;
 		
-		return 0;
+		if(a1Int>a2Int) {
+			return findKth2(array2,a2left,a2right,array1,a1left,a1right, K);
+		}
+		if(a1Int==0) {
+			return array2[a2left+K-1];
+		}
+		if(K==1) {
+			return Math.min(array1[a1left], array2[a2left]);
+		}
+		
+		
+		int ap=Math.min(K/2, a1Int);
+		int bp=K-ap;
+		if(array1[a1left+ap-1]==array2[bp+a2left-1]) {
+			return array1[a1left+ap-1];
+		}else if(array1[a1left+ap-1]<array2[bp+a2left-1]) {
+			return findKth2(array1,a1left+ap,a1right,array2,a2left,a2right,K-ap);
+		}else if(array1[a1left+ap-1]>array2[bp+a2left-1]) {
+			return  findKth2(array1,a1left,a1right,array2,a2left+bp,a2right,K-bp);
+		}
+		return -1;
 		
 	}
 	
@@ -310,12 +335,11 @@ public class Exam1 {
 			value=array2[K];
 		}else {
 			value=findKth2(array1,0,array1.length-1,array2,0,array2.length-1, K);
-
 		}
 		
 		System.out.println("Kth value is "+value);
 	}
-	
+
 	
 	
 	public static void main(String[] args) {
