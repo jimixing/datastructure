@@ -279,11 +279,67 @@ public class Exam1 {
 		
 	}
 	
+	public void question16_findFirstRepeat() {
+		
+		String str="abdcodkdjjemdldk";
+		char[] ch=str.toCharArray();
+		for(int i=0;i<ch.length;i++) {
+			if(op.search((int)(ch[i]))) {
+				System.out.println("first value of repeat :" +ch[i]);
+				break;
+			}else {
+				op.insert((int)(ch[i]));
+			}
+			
+		}
+	}
+	
+	public void question17_findSum() {
+		int[] array=generateArray(20);
+		int Sum=40;
+		for(int i=0;i<array.length;i++) {
+			op.insert(array[i]);
+		}
+		for(int i=0;i<array.length;i++) {
+			if(Sum-array[i]>0&&op.search(Sum-array[i])) {
+				System.out.println("value in array is: "+array[i]+ " "+ (Sum-array[i]));
+			}
+		}
+		
+		
+	}
+	
+	public void question18_findSum() {
+		int[] array=generateArray(20);
+		int Sum=40;
+		
+		MergeSorted ms =new MergeSorted();
+		ms.mergeSorted(array, 0, array.length-1);
+		System.out.println(Arrays.toString(array));
+		int i=0,j=array.length-1;
+		while(i<=j) {
+			if(array[i]+array[j]==Sum) {
+				System.out.println("value in array is: "+array[i]+ " "+ (Sum-array[i]));
+				i++;
+				j--;
+			}
+			while((array[i]+array[j])<Sum) {
+				i++;
+			}
+			
+			while((array[i]+array[j])>Sum) {
+				j--;
+			}
+		}
+		
+		
+	}
+	
 	
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		Exam1 ex=new Exam1();
-		ex.question15_findFirstUnRepeate();
+		ex.question18_findSum();
 	}
 
 }
