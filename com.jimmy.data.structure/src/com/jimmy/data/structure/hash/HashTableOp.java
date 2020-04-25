@@ -1,5 +1,7 @@
 package com.jimmy.data.structure.hash;
 
+import java.util.Arrays;
+
 import lombok.Data;
 
 public class HashTableOp {
@@ -139,15 +141,30 @@ public class HashTableOp {
 		
 	}
 	
+	public static int[]  generateArray() {
+		int len=20;
+		int [] array=new int[len];
+		for(int i=0;i<len;i++) {
+			int data=(int)(Math.random()*50);
+			array[i]=data;
+		}
+		System.out.println(Arrays.toString(array));
+		return array;
+	}
+	
 	
 	public static void main(String[] args) {
-		HashTableOp hashtable=new HashTableOp(20);
-		
-		for(int i=0;i<10;i++) {
-			int data=(int)(Math.random()*50);
-			hashtable.insert(data);
+		HashTableOp hashtable=new HashTableOp(10);
+		int[] array=generateArray();
+		for(int i=0;i<array.length;i++) {			
+			hashtable.insert(array[i]);
 		}
 		hashtable.print();
+		
+		hashtable.delete(array[0]);
+		
+		hashtable.print();
+		
 		
 	}
 	
