@@ -1,4 +1,4 @@
-package com.jimmy.data.structure.string;
+package com.jimmy.data.structure.string.exam;
 
 public class Exam1 {
 	
