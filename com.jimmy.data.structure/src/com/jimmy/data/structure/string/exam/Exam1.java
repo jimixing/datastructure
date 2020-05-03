@@ -286,9 +286,9 @@ public class Exam1 {
 	
 	
 	public void question12_minWindow() {
-		String str="abbacbaa";
+		String str="abbacbndaa";
 		char[] cha=str.toCharArray();
-		String pat="abc";
+		String pat="cn";
 		int[] ch=new int[26];
 		int count=0;
 		int left=0, right=0;
@@ -309,16 +309,20 @@ public class Exam1 {
 			}
 			
 			for(;j<=i-(pat.length()-1)&&count==sum;j++) {
-				if((i-j)<min) {
+				int pos2=cha[j]-'a';
+
+				if(ch[pos2]==patch[pos2]) {
+					count--;
+				}
+				ch[pos2]--;
+				
+				if((i-j)<min&&(i-j)>=pat.length()-1) {
 					left=j;
 					right=i;
 					min=i-j;
 				}
-				int pos2=cha[j]-'a';
-				if(ch[pos2]==patch[pos2]) {
-					count--;
-					ch[pos2]--;
-				}
+				
+
 
 			}	
 		}
