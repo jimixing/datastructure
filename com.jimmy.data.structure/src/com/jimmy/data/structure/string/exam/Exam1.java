@@ -286,7 +286,7 @@ public class Exam1 {
 	
 	
 	public void question12_minWindow() {
-		String str="abbacbndaa";
+		String str="abbacbndndaa";
 		char[] cha=str.toCharArray();
 		String pat="cn";
 		int[] ch=new int[26];
@@ -328,8 +328,110 @@ public class Exam1 {
 		}
 		
 		System.out.print(str.substring(left, right+1));
+
+	}
+	
+	private boolean findPatInTwoDemasion(char[][] ch, char[] pat, int pos,int row,int col,int M,int N) {
+		
+		if(pos==pat.length) {
+			return true;
+		}
+		
+		if(ch[(row-1+M)%M][col]==pat[pos]&&findPatInTwoDemasion(ch,pat,pos+1,(row-1+M)%M, col ,M,N)) {
+			return true;
+		}
+		if(ch[(row-1+M)%M][(col+1+M)%M]==pat[pos]&&findPatInTwoDemasion(ch,pat,pos+1,(row-1+M)%M,(col+1+M)%M,M,N)) {
+			return true;
+		}
+		if(ch[row][(col+1+M)%M]==pat[pos]&&findPatInTwoDemasion(ch,pat,pos+1,row,(col+1+M)%M,M,N)) {
+			return true;
+		}
+		if(ch[(row+1+M)%M][(col+1+M)%M]==pat[pos]&&findPatInTwoDemasion(ch,pat,pos+1,(row+1+M)%M,(col+1+M)%M,M,N)) {
+			return true;
+		}
+		if(ch[(row+1+M)%M][col]==pat[pos]&&findPatInTwoDemasion(ch,pat,pos+1,(row+1+M)%M,col,M,N)) {
+			return true;
+		}
+		if(ch[(row+1+M)%M][(col-1+M)%M]==pat[pos]&&findPatInTwoDemasion(ch,pat,pos+1,(row+1+M)%M,(col-1+M)%M,M,N)) {
+			return true;
+		}
+		if(ch[row][(col-1+M)%M]==pat[pos]&&findPatInTwoDemasion(ch,pat,pos+1,row,(col-1+M)%M,M,N)) {
+			return true;
+		}
+		if(ch[(row-1+M)%M][(col-1+M)%M]==pat[pos]&&findPatInTwoDemasion(ch,pat,pos+1,(row-1+M)%M,(col-1+M)%M,M,N)) {
+			return true;
+		}
+		return false;
 		
 		
+	}
+	
+	public void question13_findPatInTwoDemasion() {
+		char[][] ch= {
+				{'a','c','p','r','c'},
+				{'x','s','o','p','c'},
+				{'v','o','v','n','l'},
+				{'w','g','f','m','n'},
+				{'q','a','t','i','t'},		
+		};
+		char[] pat="microsoft".toCharArray();
+		int  row=-1, col=-1;
+		int M=ch.length;
+		int N=ch[0].length;
+		for(int i=0;i<ch.length;i++) {
+			for(int j=0;j<ch[i].length;j++) {
+				if(ch[i][j]==pat[0]) {
+					row=i;
+					col=j;
+					break;
+				}
+			}
+		}
+		if(row==-1) {
+			System.out.print(false);
+		}else {
+			boolean res=findPatInTwoDemasion(ch,pat,1,row,col,M,N);
+			System.out.print(res);
+		}
+		
+		
+		
+		
+		
+	}
+	
+	
+	public void question14_findSamePattern() {
+		int Len=10;
+		int[][] array=new int[Len][Len];
+		for(int i=0;i<Len;i++) {
+			for(int j=0;j<Len;j++) {
+				array[i][j]=(int)(Math.random()*50);
+			}
+		}
+		for(int i=0;i<Len;i++) {
+			array[9][i]=array[i][9];
+		}
+		int row=-1;
+		HashMap<Integer,Integer> maprow=new HashMap<Integer,Integer>();
+		for(int i=0;i<Len;i++) {
+			for(int j=0;j<Len;j++) {
+				maprow.put(array[j][i], 1);
+			}
+			boolean rowFound=true;
+			for(int j=0;j<Len;j++) {
+				if(maprow.get(array[i][j])==null) {
+					rowFound=false;
+				}
+			}
+			if(rowFound) {
+				row=i;
+				break;
+			}
+			maprow.clear();
+			
+		}
+		System.out.print("found item in "+ row);
 		
 	}
 	
@@ -337,7 +439,7 @@ public class Exam1 {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		Exam1 ex=new Exam1();
-		ex.question12_minWindow();
+		ex.question13_findPatInTwoDemasion();
 	}
 
 }
