@@ -5,6 +5,9 @@ public class TripleSearchTree {
 	
 	
 	public TripleSearchNode insert(TripleSearchNode root, String word,int pos) {
+		if(pos>=word.length()) {
+			return null;
+		}
 		if(root==null) {
 			root=new TripleSearchNode();
 			root.setData(word.charAt(pos));
@@ -19,7 +22,11 @@ public class TripleSearchTree {
 			}else if(root.getData()<word.charAt(pos)){
 				root.setRight(insert(root.getRight(),word,pos));
 			}else {
-				root.setEq(insert(root.getEq(),word,pos+1));
+				TripleSearchNode tem=insert(root.getEq(),word,pos+1);
+				if(tem!=null) {
+					root.setEq(tem);
+				}
+				
 			}
 		}
 		return root;
@@ -43,7 +50,7 @@ public class TripleSearchTree {
 		return false;
 	}
 	
-	
+//	private int count=0;
 //	public void print(TripleSearchNode root) {
 //		if(root==null) return ;
 //		print(root.getLeft());

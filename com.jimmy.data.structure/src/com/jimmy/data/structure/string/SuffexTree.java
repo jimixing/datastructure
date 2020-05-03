@@ -6,7 +6,7 @@ public class SuffexTree extends TripleSearchTree {
 		
 		TripleSearchNode root=insert(null,str,0);
 		
-		for(int i=1;i<str.length();i++) {
+		for(int i=1;i<str.length()-1;i++) {
 			 String sub=str.substring(i);
 			 insert(root,sub,0);
 		}
