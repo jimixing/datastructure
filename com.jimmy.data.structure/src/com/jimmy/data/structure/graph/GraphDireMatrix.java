@@ -3,12 +3,12 @@ package com.jimmy.data.structure.graph;
 import com.jimmy.data.structure.queue.ArrayQueue;
 import com.jimmy.data.structure.stack.ArrayStack;
 
-public class GraphMatrix {
+public class GraphDireMatrix {
 	private boolean adjMatrix[][];
 	private VertexNode[] vertexNode;
 	private int vertex;
 	
-	public GraphMatrix(int vertex) {
+	public GraphDireMatrix(int vertex) {
 		this.vertex=vertex;
 		this.adjMatrix=new boolean[vertex][vertex];
 		this.vertexNode=new VertexNode[vertex];
@@ -16,7 +16,6 @@ public class GraphMatrix {
 			char data=(char)(i+'a');
 			VertexNode node=new VertexNode(data);
 			vertexNode[i]=node;
-			
 		}
 	}
 	
@@ -25,18 +24,15 @@ public class GraphMatrix {
 		int j=dest-'a';
 		if(i<vertex&&i>=0&&j<vertex&&j>=0) {
 			adjMatrix[i][j]=true;
-			adjMatrix[j][i]=true;
 		}
 		
 	}
-	
-	
+
 	public void removeRelation(char source,char dest) {
 		int i=source-'a';
 		int j=dest-'a';
 		if(i<vertex&&i>=0&&j<vertex&&j>=0) {
 			adjMatrix[i][j]=false;
-			adjMatrix[j][i]=false;
 		}
 	}
 	
@@ -55,10 +51,10 @@ public class GraphMatrix {
 				return  j;
 			}
 		}
-		
 		return -1;
 		
 	}
+	
 	public void dfs() {
 		ArrayStack<Integer> stack=new ArrayStack<Integer>(Integer.class);
 		vertexNode[0].setVisited(true);
@@ -81,46 +77,89 @@ public class GraphMatrix {
 		}
 		
 	}
+	
+	public int outDegree(char source) {
+		int j=source-'a';
+		int sum=0;
+		if(j<vertex&&j>=0) {
+			for(int i=0;i<vertex;i++) {
+				if(adjMatrix[j][i]) {
+					sum++;
+				}
+			}
+		}
+		return  sum;
 
-	public void bfs() {
+	}
+	
+	public int inDegree(char source) {
+		int j=source-'a';
+		int sum=0;
+		if(j<vertex&&j>=0) {
+			for(int i=0;i<vertex;i++) {
+				if(adjMatrix[i][j]) {
+					sum++;
+				}
+			}
+
+		}
+		return sum;
+	}
+	
+	
+	public void topuSort() {
+		boolean adjMatrix2[][]=new boolean[vertex][vertex];
+		for(int i=0;i<vertex;i++) {
+			System.arraycopy(adjMatrix[i], 0, adjMatrix2[i], 0, vertex);
+		}
 		
 		ArrayQueue<Integer> aq=new ArrayQueue<Integer>(Integer.class);
-		vertexNode[0].setVisited(true);
-		System.out.print(vertexNode[0].getLabel()+",");
-		aq.enqueue(0);
-		while(!aq.isEmpty()) {	
-			int next=aq.dequeue();
-			int tem;
-			while((tem=getNextAdj(next))!=-1) {
-				vertexNode[tem].setVisited(true);
-				System.out.print(vertexNode[tem].getLabel()+",");
-				aq.enqueue(tem);
+		
+		for(int i=0;i<vertex;i++) {
+			int indegree=inDegree(vertexNode[i].getLabel());
+			if(indegree==0) {
+				vertexNode[i].setVisited(true);
+				aq.enqueue(i);
+				break;
 			}
-			
 		}
+		
+		while(!aq.isEmpty()) {
+			int i=aq.dequeue();
+			System.out.print(vertexNode[i].getLabel()+",");
+			for(int j=0;j<vertex;j++){ 
+				removeRelation((char)(i+'a'),(char)(j+'a'));
+				int ind=inDegree(vertexNode[j].getLabel());
+				if(ind==0&&!vertexNode[j].isVisited()) {
+					vertexNode[j].setVisited(true);
+					aq.enqueue(j);
+				}
+			}	
+		}
+		for(int i=0;i<vertex;i++) {
+			System.arraycopy(adjMatrix2[i], 0, adjMatrix[i], 0, vertex);
+		}
+		System.out.println();
 		for(int i=0;i<vertex;i++) {
 			vertexNode[i].setVisited(false);
 		}
-		
-		
+		dfs();
 	}
 	
 	
 	
 	public static void main(String[] args) {
-
-		GraphMatrix gm=new GraphMatrix(8);
-		gm.addRelation('a', 'b');
-		gm.addRelation('b', 'c');
-		gm.addRelation('b', 'h');
-		gm.addRelation('c', 'd');
-		gm.addRelation('c', 'e');
-		gm.addRelation('e', 'h');
-		gm.addRelation('e', 'f');
-		gm.addRelation('e', 'g');
-
 		
-		gm.bfs();
+		GraphDireMatrix gm=new GraphDireMatrix(8);
+		gm.addRelation('a', 'd');
+		gm.addRelation('a', 'e');
+		gm.addRelation('b', 'd');
+		gm.addRelation('c', 'e');
+		gm.addRelation('d', 'f');
+		gm.addRelation('d', 'g');
+		gm.addRelation('d', 'h');
+		gm.addRelation('e', 'g');
+		gm.topuSort();
 
 	}
 
