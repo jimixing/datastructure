@@ -1,5 +1,7 @@
 package com.jimmy.data.structure.graph;
 
+import java.util.Arrays;
+
 import com.jimmy.data.structure.queue.ArrayQueue;
 import com.jimmy.data.structure.stack.ArrayStack;
 
@@ -104,7 +106,41 @@ public class GraphUnDireMatrix {
 		
 		
 	}
-	
+	public void shortestPath(char s) {
+		int[] path=new int[vertex];
+		for(int i=0;i<vertex;i++) {
+			path[i]=Integer.MAX_VALUE;
+		}
+		int pos=s-'a';
+		
+		ArrayQueue<Integer> aq=new ArrayQueue<Integer>(Integer.class);
+		vertexNode[pos].setVisited(true);
+		aq.enqueue(pos);
+		while(!aq.isEmpty()) {
+			int next=aq.dequeue();
+			int tem;
+			while((tem=getNextAdj(next))!=-1) {
+				vertexNode[tem].setVisited(true);
+				if(next!=pos) {
+					int dis=path[next]+1;
+					if(dis<path[tem]) {
+						path[tem]=dis;
+					}
+				}else {
+					if(path[tem]==Integer.MAX_VALUE) {
+						path[tem]=1;
+					}
+				}
+				
+				aq.enqueue(tem);
+			}
+			
+		}
+		path[pos]=0;
+		System.out.print(Arrays.toString(path));
+		
+		
+	}
 	
 	
 	public static void main(String[] args) {
@@ -119,8 +155,8 @@ public class GraphUnDireMatrix {
 		gm.addRelation('e', 'f');
 		gm.addRelation('e', 'g');
 
+		gm.shortestPath('a');
 		
-		gm.bfs();
 
 	}
 
