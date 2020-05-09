@@ -123,9 +123,14 @@ public class GraphUnDireMatrix {
 				vertexNode[tem].setVisited(true);
 				if(next!=pos) {
 					int dis=path[next]+1;
-					if(dis<path[tem]) {
+					if(path[tem]==Integer.MAX_VALUE) {
 						path[tem]=dis;
+					}else {
+						if(dis<path[tem]) {
+							path[tem]=dis;
+						}
 					}
+					
 				}else {
 					if(path[tem]==Integer.MAX_VALUE) {
 						path[tem]=1;
