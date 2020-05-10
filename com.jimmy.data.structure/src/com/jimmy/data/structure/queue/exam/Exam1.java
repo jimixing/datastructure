@@ -6,7 +6,7 @@ import com.jimmy.data.structure.queue.QueueUtil;
 import com.jimmy.data.structure.stack.ArrayStack;
 
 public class Exam1 {
-	public void reverseQueue() {
+	public void question1_reverseQueue() {
 		ArrayQueue<Integer> aq=QueueUtil.generateQueue(10);
 		aq.printQueue();
 		ArrayStack<Integer> as=new  ArrayStack<Integer>(Integer.class);
@@ -19,7 +19,7 @@ public class Exam1 {
 		aq.printQueue();	
 		
 	}
-	public void question4() {
+	public void question4_maxwindow() {
 	//	int[] data=new int[]{1,3,-1,-3,5,3,6,7}; 
 		int[] data=new int[]{2,3,4,2,6,2,5,1};
 		int window=3;
@@ -42,7 +42,7 @@ public class Exam1 {
 	}
 	
 	
-	public void question5() {
+	public void question5_moveQueueToStack() {
 		ArrayQueue<Integer> aq=QueueUtil.generateQueue(10);
 		aq.printQueue();
 		ArrayStack<Integer> as=new  ArrayStack<Integer>(Integer.class);
@@ -58,7 +58,7 @@ public class Exam1 {
 		as.printStack();
 	}
 	
-	public void question9() {
+	public void question9_crossFirstHalfAndLastHalf() {
 		ArrayQueue<Integer> aq=QueueUtil.generateQueue(10);
 		aq.printQueue();
 		ArrayStack<Integer> temp=new  ArrayStack<Integer>(Integer.class);
@@ -80,7 +80,7 @@ public class Exam1 {
 		
 	}
 	
-	public void question10() {
+	public void question10_reverseFirstKNode() {
 		ArrayQueue<Integer> aq=QueueUtil.generateQueue(10);
 		aq.printQueue();
 		ArrayStack<Integer> temp=new  ArrayStack<Integer>(Integer.class);
@@ -93,7 +93,7 @@ public class Exam1 {
 		while(!temp.isEmpty()) {
 			aq.enqueue(temp.pop());
 		}
-		while(i<10) {
+		while(i<aq.size()) {
 			aq.enqueue(aq.dequeue());
 			i++;
 		}
@@ -103,7 +103,7 @@ public class Exam1 {
 	
 	public static void main(String[] args) {
 		Exam1 ex=new Exam1();
-		ex.question10();
+		ex.question10_reverseFirstKNode();
 	}
 
 }
