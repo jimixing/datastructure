@@ -155,18 +155,7 @@ public class SingList {
 		return length;
 	}
 	
-	public SingListNode reverseNode(SingListNode head) {
-		SingListNode temp=null,cur=head,next=null;
-		while(cur!=null&&cur.getNext()!=null) {
-			next=cur.getNext();
-			cur.setNext(temp);
-			temp=cur;
-			cur=next;
-		}
-		cur.setNext(temp);
-		return cur;
-		
-	}
+	
 	
 	
 	

@@ -15,7 +15,7 @@ import com.jimmy.data.structure.stack.QueueStack;
 
 public class Exam1 {
 	
-	public void isMatchforExpress() {
+	public void question1_isMatchforExpress() {
 		Map<Character,Character> map=new HashMap<Character,Character>();
 		map.put('(', ')');
 		map.put('{', '}');
@@ -56,7 +56,7 @@ public class Exam1 {
 		System.out.println(result&&ls.isEmpty());
 	}
 	
-	public void transformToQianzui() {
+	public void question2_transformToQianzui() {
 		String expr="1+((2+3)*4)-5";
 		//String expr="(a+b)*(c+d)";
 		ArrayStack<Character> ops=new ArrayStack<Character>(Character.class);
@@ -117,7 +117,7 @@ public class Exam1 {
 		
 	}
 	
-	public void transfrmToHouZhui() {
+	public void question4_transfrmToHouZhui() {
 		String expr="1+((2+3)*4)-5";
 		ArrayStack<Character> ops=new ArrayStack<Character>(Character.class);
 		ArrayStack<Character> data=new ArrayStack<Character>(Character.class);
@@ -149,7 +149,7 @@ public class Exam1 {
 		
 	}
 	
-	public void getMinByStack2() {
+	public void question6_getMinByStack2() {
 		int count=10;
 		int[] data=new int[count];
 		while(count>=1) {
@@ -173,7 +173,7 @@ public class Exam1 {
 	}
 	
 	
-	public void isHuiWen2() {
+	public void question8_isHuiWen2() {
 		String str="abaabXbaba";
 		ArrayStack<Character> ops1=new ArrayStack<Character>(Character.class);
 		ArrayStack<Character> ops2=new ArrayStack<Character>(Character.class);
@@ -197,7 +197,7 @@ public class Exam1 {
 	}
 	
 	
-	public void getMinByStack() {
+	public void question6_getMinByStack() {
 		int count=10;
 		int[] data=new int[count];
 		while(count>=1) {
@@ -241,7 +241,7 @@ public class Exam1 {
 		
 	}
 	
-	public void reverseStack() {
+	public void question11_reverseStack() {
 		int count=10;
 		ArrayStack<Integer> ls=new ArrayStack<Integer>(Integer.class);
 		while(count>=1) {
@@ -271,7 +271,7 @@ public class Exam1 {
 			System.out.print(queue.peek()+"---->");
 		}
 	}
-	public void arrayTwoStack() {
+	public void question14_arrayTwoStack() {
 		ArrayTwoStack<Integer> ats=new ArrayTwoStack<Integer>(Integer.class);
 		List<Integer> list=Arrays.asList(new Integer[]{3,4,5,6});
 		for(Integer data: list){
@@ -292,7 +292,7 @@ public class Exam1 {
 		
 	}
 	
-	public void arrayThreeStack() {
+	public void question15_arrayThreeStack() {
 		ArrayThreeStack<Integer> ats =new ArrayThreeStack<Integer>(Integer.class);
 		List<Integer> list1=Arrays.asList(new Integer[]{3,4,5,6,4,1,2,3,4,4,5,5,5,5,5,2,2,6});
 		for(Integer data5: list1){
@@ -347,7 +347,7 @@ public class Exam1 {
 		
 	}
 	
-	public void calSpan() {
+	public void question22_calSpan() {
 		int[] data=new int[10];
 		int[] span=new int[10];
 		for(int i=0;i<10;i++) {
@@ -375,7 +375,7 @@ public class Exam1 {
 		
 	}
 	
-	public void calMaxZhiFangTu() {
+	public void question24_calMaxZhiFangTu() {
 //		int[] data=new int[10];
 //		for(int i=0;i<10;i++) {
 //			data[i]=(int)(50*Math.random());
@@ -401,7 +401,7 @@ public class Exam1 {
 		
 		
 	}
-	public void sortedStack() {
+	public void question25_sortedStack() {
 		Integer[] data=new Integer[10];
 		for(int i=0;i<data.length;i++) {
 			data[i]=(int)(50*Math.random());
@@ -424,7 +424,7 @@ public class Exam1 {
 		
 	}
 	
-	public void isMatchNearby() {
+	public void question26_isMatchNearby() {
 		Integer[] data={4,8,-2,-3,11,10,5,6};
 		System.out.print(Arrays.toString(data));
 
@@ -447,7 +447,7 @@ public class Exam1 {
 		
 	}
 	
-	public void removeRepeat() {
+	public void question27_removeRepeat() {
 		Integer[] data={1,9,6,8,8,8,0,1,1,0,6,5};
 		System.out.print(Arrays.toString(data));
 

@@ -11,7 +11,7 @@ import com.jimmy.data.structure.list.SingListNode;
 public class Exam1 {
 
 	
-	public void JosephRing() {
+	public void question41_JosephRing() {
 		SingListNode head=ListUtil.generateSingCircleList(100,true);
 		SingCircleList circleList=new SingCircleList();
 		circleList.printList(head);
@@ -99,7 +99,7 @@ public class Exam1 {
 		
 	}
 	
-	public void sortedSingList() {
+	public void question34_sortedSingList() {
 		SingList singList=new SingList();
 		SingListNode head1=ListUtil.generateOrderSingList(20);
 		singList.printList(head1);
@@ -161,7 +161,7 @@ public class Exam1 {
 			
 		}
 		
-		SingListNode tail=singlist.reverseNode(slow);
+		SingListNode tail=question16_reverseNode(slow);
 		boolean isPalindromic=true;
 		while(head!=tail) {
 			if(head.getData()!=tail.getData()) {
@@ -175,7 +175,7 @@ public class Exam1 {
 		System.out.println(isPalindromic);	
 	}
 	
-	public void exchangeNearbyNode() {
+	public void question38_exchangeNearbyNode() {
 		SingListNode head=ListUtil.generateSingList(20);
 		SingList singlist=new SingList();
 		singlist.printList(head);
@@ -225,7 +225,83 @@ public class Exam1 {
 		singlist.printList(head);
 	}
 	
-    public void reverseNodeByk() {
+	public SingListNode question16_reverseNode(SingListNode head) {
+		SingListNode temp=null,cur=head,next=null;
+		while(cur!=null&&cur.getNext()!=null) {
+			next=cur.getNext();
+			cur.setNext(temp);
+			temp=cur;
+			cur=next;
+		}
+		cur.setNext(temp);
+		return cur;
+		
+	}
+	
+	
+	public void question39_reverseNodeByK2() {
+		
+		SingListNode head=ListUtil.generateSingList(12);
+		int K=4;
+		
+		SingListNode next=head;
+		SingListNode start=head;
+		List<SingListNode> list=new ArrayList<SingListNode>();
+		while(next!=null) {
+			start=next;
+			int pos=0;
+			while(pos<=K-1) {
+				next=next.getNext();
+				if(next==null) {
+					break;
+				}
+				pos++;	
+			}
+			list.add(reverse(start,next));
+			if(next==null) {
+				break;
+			}
+		}
+		head=list.get(0);
+		SingListNode pre=head;
+		next=head.getNext();
+		while(next!=null) {
+			pre=next;
+			next=next.getNext();	
+		}
+		for(int i=1;i<list.size();i++) {
+			pre.setNext(list.get(i));
+			next=pre.getNext();
+			while(next!=null) {
+				pre=next;
+				next=next.getNext();	
+			}
+    	}
+		SingList singlist=new SingList();
+    	singlist.printList(head);
+		
+		
+		
+	}
+	
+	public SingListNode reverse(SingListNode start, SingListNode end) {
+		
+		SingListNode temp=null,cur=start,next=null;
+		while(cur!=null&&cur.getNext()!=end) {
+			next=cur.getNext();
+			cur.setNext(temp);
+			temp=cur;
+			cur=next;
+		}
+		cur.setNext(temp);
+		return cur;
+				 
+		
+	}
+	
+	
+	
+    public void question39_reverseNodeByk() {
     	
     	SingListNode head=ListUtil.generateSingList(12);
     	int k=3;	
@@ -286,7 +362,7 @@ public class Exam1 {
 	public void findLastN() {
 		SingListNode head=ListUtil.generateSingList(50);
 		SingList singList=new SingList();
-		SingListNode reverseHead=singList.reverseNode(head);
+		SingListNode reverseHead=question16_reverseNode(head);
 		singList.printList(reverseHead);
 		int lastK=10;
 		int pos=1;
@@ -296,7 +372,7 @@ public class Exam1 {
 			cur=cur.getNext();
 		}
 		System.out.print(cur.getData());
-		SingListNode reverseBackHead=singList.reverseNode(reverseHead);
+		SingListNode reverseBackHead=question16_reverseNode(reverseHead);
 		singList.printList(reverseBackHead);
 		
 	}
@@ -323,10 +399,35 @@ public class Exam1 {
 		
 	}
 	
+	private SingListNode reverseByNext(SingListNode head) {
+		if(head==null||head.getNext()==null) {
+			return head;
+		}
+		SingListNode tem=head.getNext();
+		head.setNext(tem.getNext());
+		tem.setNext(head);
+		head=tem;
+		head.getNext().setNext(reverseByNext(head.getNext().getNext()));	
+		return head;
+	}
+	
+	public void question32_reverseByNext() {
+		
+		SingListNode head=ListUtil.generateSingList(10);
+		SingList singlist=new SingList();
+		singlist.printList(head);
+		
+		SingListNode res=reverseByNext(head);
+		singlist.printList(res);
+		
+		
+	}
+	
+	
 	
 	public static void main(String[] arg) {
 		Exam1 ex=new Exam1();
-		ex.findLastMod();
+		ex.question39_reverseNodeByK2();
 
 	}
 	
