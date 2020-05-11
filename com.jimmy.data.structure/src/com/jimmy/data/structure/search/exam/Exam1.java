@@ -1116,7 +1116,7 @@ public class Exam1 {
 		int j=1;
 		for(i=1;i<len;) {
 			j=i*2;
-			if(j<len&&!array[i]&&array[j]) {
+			if(j<len&&array[i]!=array[j]) {
 				break;
 			}
 			i=i*2;
