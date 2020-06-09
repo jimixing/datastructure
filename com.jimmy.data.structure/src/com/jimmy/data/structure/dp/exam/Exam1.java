@@ -455,16 +455,42 @@ public class Exam1 {
 		}
 		
 		System.out.print(max);
+	}
+	
+	
+	
+	public void question48_package() {
 		
+		int weight[] = {2,3,4,5};
+		int value[] = {3,4,5,7};
+		int maxweight = 9;
+		int[][] dp=new int[weight.length+1][maxweight+1] ;
 		
-		
+		for(int i=0;i<=maxweight;i++) {
+				dp[0][i]=0;
+		}
+		for(int i=0;i<=value.length;i++) {
+			dp[i][0]=0;
+		}
+		for(int i=1;i<=weight.length;i++) {
+			for(int j=1;j<=maxweight;j++) {
+				dp[i][j]=dp[i-1][j];
+				if(j>=weight[i-1]) {
+					if(dp[i-1][j-weight[i-1]]+value[i-1]>dp[i-1][j]) {
+						dp[i][j]=dp[i-1][j-weight[i-1]]+value[i-1];
+					}
+				}
+				
+			}
+		}
+		System.out.print(dp[value.length][maxweight]);
 		
 	}
 	
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		Exam1 ex=new Exam1();
-		ex.question47_maxUpSubValue();
+		ex.question48_package();
 	}
 
 }
