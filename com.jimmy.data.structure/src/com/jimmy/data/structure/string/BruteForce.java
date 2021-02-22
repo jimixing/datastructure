@@ -24,7 +24,7 @@ public class BruteForce {
 
 	public static void main(String[] args) {
 		String str="fsdfadsfadsfsadfsaf";
-		String find="fad";
+		String find="fsad";
 		char[] ch=str.toCharArray();
 		char[] re=find.toCharArray();
 		

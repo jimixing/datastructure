@@ -17,20 +17,16 @@ public class KMP {
 	
 	private int[] generateNext() {
 			int[] next=new int[M];
-			int i=1,j=0;
-			next[0]=0;
-			while(i<M) {
-				if(pat[i]==pat[j]) {
-					next[i]=j+1;
-					i++;
-					j++;
-				}else if(j>0){
-					j=next[j-1];	
-				}else {
-					next[i]=0;
-					i++;
-				}
+			next[0]=-1;
+			
+			for(int i=1;i<M;i++) {
+				int u=next[i-1];
+				while(pat[i]!=pat[u+1]&&u>=0)u=next[u];
+				if(pat[i]==pat[u+1])next[i]=u+1;
+				else next[i]=-1;
+				
 			}
+			
 			return next;
 
 	}
@@ -39,13 +35,14 @@ public class KMP {
 		System.out.println(Arrays.toString(next));
 		int i=0,j=0;
 		while(i<chstr.length) {
-			if(j<pat.length&&chstr[i]==pat[j]) {
+			if(j<M&&chstr[i]==pat[j]) {
 				i++;
 				j++;
-			}else if(j>0){
-				j=next[j-1];
+			}else if(next[j]>=0){
+				i+=j-next[j-1];
 			}else{
 				i++;
+				
 			}
 			if(j==pat.length) {
 				return i-j;
@@ -56,7 +53,7 @@ public class KMP {
 	
 	public static void main(String[] args) {
 		String str="bacbabababacaca";//"fsdfadsfadsfsadfsaf";
-		String find="ababaca";
+		String find="cbab";
 		
 		KMP kmp=new KMP(find);
 		int index=kmp.processKMP(str);
