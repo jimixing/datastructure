@@ -170,8 +170,8 @@ public class SuffixTree{
 		}
 		return false;
 	}
-
-	public static void main(String[] args) {
+	
+	public void searchInsuffixTree() {
 		SuffixTree trie=new SuffixTree();
 		String string="dfasfad";
 		for(int i=0;i<string.length();i++) {
@@ -180,17 +180,50 @@ public class SuffixTree{
 
        boolean result= trie.search("fas");
        System.out.print(result);
+	}
+
+	
+	public void findCommon() {
+		SuffixTree trie=new SuffixTree();
+		String[] str= {"abcde","cdef","ccde"};
+		int no=0;
+		for(String string:str) {
+			for(int i=0;i<string.length();i++) {
+				trie.addNode(string.substring(i), no);
+			}
+			no++;
+		}
+		trie.findCommon(str.length);
+	}
+	
+	public void findMaxHuiWen() {
+		SuffixTree trie=new SuffixTree();
+        String str= "banana";
 		
-//		SuffixTree trie=new SuffixTree();
-//		String[] str= {"abcde","cdef","ccde"};
-//		int no=0;
-//		for(String string:str) {
-//			for(int i=0;i<string.length();i++) {
-//				trie.addNode(string.substring(i), no);
-//			}
-//			no++;
-//		}
-//		trie.findCommon(str.length);
+        for(int i=0;i<str.length();i++) {
+			trie.addNode(str.substring(i),0);
+		}
+        
+        char[] arrays=str.toCharArray();
+        int len=arrays.length-1;
+        for(int i=0;i<arrays.length/2;i++) {
+        	char tem=arrays[i];
+        	arrays[i]=arrays[len-i];
+        	arrays[len-i]=tem;
+        }
+        String str2=new String(arrays);
+        
+        for(int i=0;i<str2.length();i++) {
+			trie.addNode(str2.substring(i),1);
+		}
+        trie.findCommon(2);
+        
+		
+	}
+	public static void main(String[] args) {
+		SuffixTree trie=new SuffixTree();
+		trie.findMaxHuiWen();
+
 		
 	}
 

@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Random;
 
 import com.jimmy.data.structure.heap.Heap;
+import com.jimmy.data.structure.stack.ArrayStack;
 import com.jimmy.data.structure.string.SuffexTree;
 import com.jimmy.data.structure.string.TripleSearchNode;
 
@@ -285,6 +286,37 @@ public class Exam1 {
 	}
 	
 	
+	public void question11_repeat3() {
+		String str="abcccbcba";
+		char[] ch=str.toCharArray();
+		
+		ArrayStack ar=new ArrayStack(Character.class);
+		
+		ar.push(ch[0]);
+		char temp=ch[0];
+		for(int i=1;i<ch.length;) {
+			char cha=(char)ar.top();
+			if(cha!=ch[i]) {
+				ar.push(ch[i]);
+				i++;
+			}else {
+				temp=cha;
+				while(i<ch.length) {
+					if(ch[i]==temp) {
+						i++;
+					}else {
+						break;
+					}
+				}
+				ar.pop();
+			}
+			
+		}
+		ar.printStack();
+		
+	}
+	
+	
 	public void question12_minWindow() {
 		String str="abbacbndndaa";
 		char[] cha=str.toCharArray();
@@ -330,6 +362,49 @@ public class Exam1 {
 		System.out.print(str.substring(left, right+1));
 
 	}
+	public void question12_minWindow2() {
+		String str="abbacbndndaa";
+		char[] cha_src=str.toCharArray();
+		String pat="cnnd";
+		char[] cha_pat=pat.toCharArray();
+		int[] shouldFound=new int[26];
+		for(int i=0;i<cha_pat.length;i++) {
+			shouldFound[cha_pat[i]-'a']++;
+		}
+		int[] hasFound=new int[26];
+		int left=0,right=0,count=0,minWindow=Integer.MAX_VALUE;
+		for(int i=0;i<cha_src.length;i++) {
+			if(shouldFound[cha_src[i]-'a']==0) {
+				continue;
+			}
+			hasFound[cha_src[i]-'a']++;
+			if(shouldFound[cha_src[i]-'a']>=hasFound[cha_src[i]-'a']) {
+				count++;
+			}
+			
+			if(count==cha_pat.length) {
+				right=i;
+				while(hasFound[cha_src[left]-'a']==0||hasFound[cha_src[left]-'a']>shouldFound[cha_src[left]-'a']) {
+					if(hasFound[cha_src[left]-'a']>shouldFound[cha_src[left]-'a']) {
+						hasFound[cha_src[left]-'a']--;
+					}
+					left++;
+				}
+				if(minWindow>right-left+1) {
+					minWindow=right-left+1;
+				}
+			}
+			
+			
+		}
+		System.out.print(str.substring(left, right));
+
+		
+		
+	}
+
+	
+	
 	
 	private boolean findPatInTwoDemasion(char[][] ch, char[] pat, int pos,int row,int col,int M,int N) {
 		
@@ -439,7 +514,7 @@ public class Exam1 {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		Exam1 ex=new Exam1();
-		ex.question13_findPatInTwoDemasion();
+		ex.question10_combination();
 	}
 
 }
